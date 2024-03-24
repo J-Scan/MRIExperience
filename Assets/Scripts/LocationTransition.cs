@@ -11,7 +11,7 @@ public class LocationTransition : MonoBehaviour
 
     private void Start()
     {
-        Invoke("SetNextLocation", 5);
+        //Invoke("SetNextLocation", 5);
     }
 
     public void SetNextLocation()
