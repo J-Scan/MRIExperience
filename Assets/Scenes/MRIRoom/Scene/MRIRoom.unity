@@ -13027,6 +13027,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MRI-All
       objectReference: {fileID: 0}
+    - target: {fileID: 3016556712562166218, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621166733631407919, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6286620878538205321, guid: f9e07f2d8e09b4c4997f0364933ea7db,
         type: 3}
       propertyPath: m_VideoClip
@@ -13127,6 +13137,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033929445151310098, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033929445151310098, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033929445151310098, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033929445151310098, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.296
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033929445151310098, guid: f9e07f2d8e09b4c4997f0364933ea7db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 8727712598797785048, guid: f9e07f2d8e09b4c4997f0364933ea7db,
         type: 3}
