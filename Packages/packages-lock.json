@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.crispgroup.vrassetspackage": {
+      "version": "file:com.crispgroup.vrassetspackage",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.meta.xr.sdk.all": {
       "version": "59.0.0",
       "depth": 0,
