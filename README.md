@@ -11,3 +11,7 @@ Brown RKJ, Petty S, O'Malley S, Stojanovska J, Davenport MS, Kazerooni EA, Fessa
 Le May S, Genest C, Hung N, Francoeur M, Guingo E, Paquette J, Fortin O, Guay S. The Efficacy of Virtual Reality Game Preparation for Children Scheduled for Magnetic Resonance Imaging Procedures (IMAGINE): Protocol for a Randomized Controlled Trial. JMIR Res Protoc. 2022 Jun 13;11(6):e30616. doi: 10.2196/30616. PMID: 35700000; PMCID: PMC9237773.
 
 Nakarada-Kordic I, Reay S, Bennett G, Kruse J, Lydon AM, Sim J. Can virtual reality simulation prepare patients for an MRI experience? Radiography (Lond). 2020 Aug;26(3):205-213. doi: 10.1016/j.radi.2019.11.004. Epub 2019 Nov 28. PMID: 32052767.
+
+# Dependencies
+## Assets
+- Package Manager > + > Add package from URL > https://github.com/CRISPGroup/com.crispgroup.vrassetspackage.git (or go to Packages folder and clone the repo)

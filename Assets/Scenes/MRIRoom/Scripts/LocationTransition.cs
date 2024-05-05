@@ -11,15 +11,15 @@ public class LocationTransition : MonoBehaviour
 
     private void Start()
     {
-        //Invoke("SetNextLocation", 5);
+        Invoke("SetNextLocation", 0);
     }
 
     public void SetNextLocation()
     {
         Debug.Log("SetNextLocation called");
-        locationIndex++;
         XRRig.transform.position = locations[locationIndex % locations.Length].position;
         XRRig.transform.rotation = locations[locationIndex % locations.Length].rotation;
+        locationIndex++;
         //GoToLocation(locations[locationIndex]);
         //locationIndex++;
     }

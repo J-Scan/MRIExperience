@@ -6,6 +6,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.crispgroup.vrassetspackage2": {
+      "version": "file:com.crispgroup.vrassetspackage2",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.meta.xr.sdk.all": {
       "version": "59.0.0",
       "depth": 0,
