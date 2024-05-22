@@ -4,36 +4,39 @@ using UnityEngine;
 
 public class LocationTransition : MonoBehaviour
 {
-    public FadeScreen fadeScreen;
-    public GameObject XRRig;
-    public Transform[] locations;
-    public int locationIndex = 0;
+    [SerializeField] private FadeScreen fadeScreen;
+    [SerializeField] private GameObject XRRig;
+    [SerializeField] private Transform[] locations;
+    private int locationIndex = 0;
 
-    private void Start()
+    public void Start()
     {
-        Invoke("SetNextLocation", 0);
+        GoToFirstLocation();
     }
 
-    public void SetNextLocation()
+    public void GoToFirstLocation()
     {
-        Debug.Log("SetNextLocation called");
         XRRig.transform.position = locations[locationIndex % locations.Length].position;
         XRRig.transform.rotation = locations[locationIndex % locations.Length].rotation;
         locationIndex++;
-        //GoToLocation(locations[locationIndex]);
-        //locationIndex++;
     }
 
+    public void GoToNextLocation()
+    {
+        Debug.Log("GoToNextLocation called");
+        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length]));
+        locationIndex++;
+    }
 
-    IEnumerator GoToLocation(Transform newLocation)
+    public IEnumerator GoToLocation(Transform newLocation)
     {
         Debug.Log("GoToLocation called");
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        //Set to new location
         XRRig.transform.position = newLocation.position;
         XRRig.transform.rotation = newLocation.rotation;
         Debug.Log("swtiched");
+        fadeScreen.FadeIn();
     }
 }
