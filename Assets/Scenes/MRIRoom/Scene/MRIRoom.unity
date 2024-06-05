@@ -18802,19 +18802,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1368228559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1372474801}
-        m_TargetAssemblyTypeName: LocationTransition, Assembly-CSharp
-        m_MethodName: ResetCurrentLocation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1327760475
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19039,6 +19027,11 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1820897918385990095, guid: d6878e1999eb4b44a9f5a263af86c185,
+        type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2218496723442559053, guid: d6878e1999eb4b44a9f5a263af86c185,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19115,6 +19108,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1342502354}
   m_SourcePrefab: {fileID: 100100000, guid: d6878e1999eb4b44a9f5a263af86c185, type: 3}
+--- !u!1 &1342502349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2218496723442559054, guid: d6878e1999eb4b44a9f5a263af86c185,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342502348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1342502350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6311120899289156754, guid: d6878e1999eb4b44a9f5a263af86c185,
@@ -19710,11 +19709,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 1307646640}
-  XRRig: {fileID: 1342502353}
+  XRRig: {fileID: 1342502349}
   locations:
   - {fileID: 1428819069}
   - {fileID: 344937241}
   - {fileID: 1873959808}
+  head: {fileID: 1342502352}
+  origin: {fileID: 2006043176}
 --- !u!4 &1372474802
 Transform:
   m_ObjectHideFlags: 0
@@ -21869,19 +21870,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 487644849}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1372474801}
-        m_TargetAssemblyTypeName: LocationTransition, Assembly-CSharp
-        m_MethodName: ResetCurrentLocation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1492227022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23222,19 +23211,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 732575910}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1372474801}
-        m_TargetAssemblyTypeName: LocationTransition, Assembly-CSharp
-        m_MethodName: ResetCurrentLocation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1572357517
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29950,6 +29927,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd7220df7cb5ae046b0c87ff7da1cd9d, type: 3}
+--- !u!4 &2006043176 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2218496723442559053, guid: d6878e1999eb4b44a9f5a263af86c185,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342502348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2007051958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2181815271699128955, guid: 2f01966b6600a5143924524c0b3fcf50,
