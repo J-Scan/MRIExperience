@@ -28,6 +28,12 @@ public class LocationTransition : MonoBehaviour
         locationIndex++;
     }
 
+    public void ResetCurrentLocation()
+    {
+        XRRig.transform.position = locations[locationIndex-1 % locations.Length].position;
+        XRRig.transform.rotation = locations[locationIndex-1 % locations.Length].rotation;
+    }
+
     public IEnumerator GoToLocation(Transform newLocation)
     {
         Debug.Log("GoToLocation called");

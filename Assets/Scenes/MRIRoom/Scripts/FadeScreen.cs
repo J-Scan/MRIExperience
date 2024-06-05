@@ -21,7 +21,6 @@ public class FadeScreen : MonoBehaviour
     public void FadeIn()
     {
         Fade(1, 0);
-
     }
 
     public void FadeOut()
@@ -36,6 +35,7 @@ public class FadeScreen : MonoBehaviour
 
     public IEnumerator FadeRoutine(float alphaIn, float alphaOut)
     {
+        GetComponent<MeshRenderer>().enabled = true;
         float timer = 0;
         while(timer <= fadeDuration)
         {
@@ -51,5 +51,6 @@ public class FadeScreen : MonoBehaviour
         Color newColor2 = fadeColor;
         newColor2.a = alphaOut;
         rend.material.SetColor("_Color", newColor2);
+        GetComponent<MeshRenderer>().enabled = false;
     }
 }
