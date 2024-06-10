@@ -12,16 +12,27 @@ public class LocationTransition : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
 
+    public void Awake()
+    {
+        fadeScreen.FadeIn();
+    }
+
     public void Start()
     {
-        GoToFirstLocation();
+        StartCoroutine(GoToFirstLocation(1));
     }
 
     public void Recenter()
     {
+        Debug.Log("----Recenter----");
+        Debug.Log("Head position: " + head.position);
+        Debug.Log("XRRig Origin position: " + origin.position);
         Vector3 offset = head.position - origin.position;
+        Debug.Log("Offset: " + offset);
         offset.y = 0;
+        Debug.Log("New Offset: " + offset);
         origin.position = locations[locationIndex % locations.Length].position - offset;
+        Debug.Log("New XRRig Origin position: " + origin.position);
 
         Vector3 targetForward = locations[locationIndex % locations.Length].forward;
         targetForward.y = 0;
@@ -33,11 +44,9 @@ public class LocationTransition : MonoBehaviour
         origin.RotateAround(head.position, Vector3.up, angle);
     }
 
-    public void GoToFirstLocation()
+    public IEnumerator GoToFirstLocation(float waitTime)
     {
-        //XRRig.transform.position = locations[locationIndex % locations.Length].position;
-        //XRRig.transform.rotation = locations[locationIndex % locations.Length].rotation;
-
+        yield return new WaitForSeconds(waitTime);
         Recenter();
     }
 
@@ -59,11 +68,8 @@ public class LocationTransition : MonoBehaviour
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
-        //XRRig.transform.position = newLocation.position;
-        //XRRig.transform.rotation = newLocation.rotation;
-
         Recenter();
-        Debug.Log("swtiched");
+        Debug.Log("switched");
         fadeScreen.FadeIn();
     }
 }

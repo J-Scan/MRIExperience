@@ -24,7 +24,7 @@ public class DragXRRig : MonoBehaviour
 
     void PerformDragging()
     {
-        Debug.Log("Perform Dragging..");
+        //Debug.Log("Perform Dragging..");
         previousPosition = transform.position;
         isDragging = true;
         StartCoroutine(DoDragging());
@@ -32,13 +32,13 @@ public class DragXRRig : MonoBehaviour
 
     IEnumerator DoDragging()
     {
-        Debug.Log("Do Dragging..");
+        //Debug.Log("Do Dragging..");
         while (isDragging)
         {
             Vector3 currentPosition = transform.position;
             Vector3 movement = currentPosition - previousPosition;
             xRRigTransform.position += movement;
-            Debug.Log("XRRig pos: " + xRRigTransform.position);
+            //Debug.Log("XRRig pos: " + xRRigTransform.position);
 
             previousPosition = currentPosition;
 
