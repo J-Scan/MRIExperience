@@ -4,3 +4,5 @@
 .tif filter=lfs diff=lfs merge=lfs -text
 .mp4 filter=lfs diff=lfs merge=lfs -text
 .mkv filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Hands;
+using UnityEngine.XR.OpenXR.Input;
 
 public class LocationTransition : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class LocationTransition : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
 
+    private bool recentered = false;
+
     public void Awake()
     {
         fadeScreen.FadeIn();
@@ -21,6 +25,29 @@ public class LocationTransition : MonoBehaviour
     {
         StartCoroutine(GoToFirstLocation(1));
     }
+
+    /* Recenter if click on A
+    public void Update()
+    {
+        var inputDevices = new List<UnityEngine.XR.InputDevice>();
+        UnityEngine.XR.InputDevices.GetDevices(inputDevices);
+
+        foreach (var device in inputDevices)
+        {
+            bool triggerValue;
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out triggerValue) && triggerValue && !recentered)
+            {
+                Recenter();
+                recentered = true;
+            }
+            else if (!triggerValue)
+            {
+                recentered = false;
+            }
+        }
+    }
+
+    */
 
     public void Recenter()
     {
