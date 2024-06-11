@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Hands;
-using UnityEngine.XR.OpenXR.Input;
+using UnityEngine.InputSystem;
 
 public class LocationTransition : MonoBehaviour
 {
@@ -48,6 +47,15 @@ public class LocationTransition : MonoBehaviour
     }
 
     */
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.JoystickButton0)) {
+            Debug.Log("A Button Pressed");
+            Recenter();
+        }
+
+    }
 
     public void Recenter()
     {
