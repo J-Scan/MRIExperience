@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class LocationTransition : MonoBehaviour
 {
@@ -13,8 +11,6 @@ public class LocationTransition : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
 
-    private bool recentered = false;
-
     public void Awake()
     {
         fadeScreen.FadeIn();
@@ -25,49 +21,17 @@ public class LocationTransition : MonoBehaviour
         StartCoroutine(GoToFirstLocation(1));
     }
 
-    /* Recenter if click on A
-    public void Update()
-    {
-        var inputDevices = new List<UnityEngine.XR.InputDevice>();
-        UnityEngine.XR.InputDevices.GetDevices(inputDevices);
-
-        foreach (var device in inputDevices)
-        {
-            bool triggerValue;
-            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out triggerValue) && triggerValue && !recentered)
-            {
-                Recenter();
-                recentered = true;
-            }
-            else if (!triggerValue)
-            {
-                recentered = false;
-            }
-        }
-    }
-
-    */
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0)) {
-            Debug.Log("A Button Pressed");
-            Recenter();
-        }
-
-    }
-
     public void Recenter()
     {
-        Debug.Log("----Recenter----");
-        Debug.Log("Head position: " + head.position);
-        Debug.Log("XRRig Origin position: " + origin.position);
+        //Debug.Log("----Recenter----");
+        //Debug.Log("Head position: " + head.position);
+        //Debug.Log("XRRig Origin position: " + origin.position);
         Vector3 offset = head.position - origin.position;
-        Debug.Log("Offset: " + offset);
+        //Debug.Log("Offset: " + offset);
         offset.y = 0;
-        Debug.Log("New Offset: " + offset);
+        //Debug.Log("New Offset: " + offset);
         origin.position = locations[locationIndex % locations.Length].position - offset;
-        Debug.Log("New XRRig Origin position: " + origin.position);
+        //Debug.Log("New XRRig Origin position: " + origin.position);
 
         Vector3 targetForward = locations[locationIndex % locations.Length].forward;
         targetForward.y = 0;
@@ -85,10 +49,15 @@ public class LocationTransition : MonoBehaviour
         Recenter();
     }
 
+    public void IncrementLocation()
+    {
+        locationIndex++;
+    }
+
     public void GoToNextLocation()
     {
         locationIndex++;
-        Debug.Log("GoToNextLocation called");
+        //Debug.Log("GoToNextLocation called");
         StartCoroutine(GoToLocation(locations[locationIndex % locations.Length]));
     }
 
@@ -97,14 +66,30 @@ public class LocationTransition : MonoBehaviour
         Recenter();
     }
 
+    public void EndLocation()
+    {
+        StartCoroutine(PerformEndLocation());
+    }
+
     public IEnumerator GoToLocation(Transform newLocation)
     {
-        Debug.Log("GoToLocation called");
+        //Debug.Log("GoToLocation called");
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
         Recenter();
-        Debug.Log("switched");
+        //Debug.Log("switched");
         fadeScreen.FadeIn();
+    }
+
+    public IEnumerator PerformEndLocation()
+    {
+        fadeScreen.FadeOut();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration-0.5f);
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                Application.Quit();
+        #endif
     }
 }
