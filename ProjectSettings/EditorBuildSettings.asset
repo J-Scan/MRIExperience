@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MRIRoom/Scene/MRIRoom.unity
     guid: 6dc575a893af7284fab6d3b0e6ecc01e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MoonTravel/Scene/MoonTravel.unity
     guid: acf20dd32f6869c40b6e0cb67aa82640
   m_configObjects:
