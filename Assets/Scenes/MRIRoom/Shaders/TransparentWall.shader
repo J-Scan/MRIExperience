@@ -3,9 +3,10 @@ Shader "Unlit/TransparentWall" {
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _Color ("Color", Color) = (1, 0, 0, 1)
         _StencilVal ("Stencil Value", Int) = 1
+        _OutsideColor ("Outside Color", Color) = (1, 1, 1, 1)
     }
     SubShader {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="Opaque" }
         LOD 200
 
         Stencil {
@@ -15,7 +16,7 @@ Shader "Unlit/TransparentWall" {
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
-        ZWrite Off
+        ZWrite On
 
         Pass {
             CGPROGRAM
@@ -26,7 +27,9 @@ Shader "Unlit/TransparentWall" {
 
             sampler2D _MainTex;
             fixed4 _Color;
+            fixed4 _OutsideColor;
             float4 _MainTex_ST;
+            int _StencilVal;
 
             struct appdata {
                 float4 vertex : POSITION;
@@ -47,10 +50,17 @@ Shader "Unlit/TransparentWall" {
 
             fixed4 frag (v2f i) : SV_Target {
                 fixed4 tex = tex2D(_MainTex, i.uv);
-                return tex * _Color;
+                fixed4 outputColor = tex * _Color;
+
+                // If the stencil value is not equal, render the outside color
+                if (_StencilVal == 0) {
+                    outputColor = _OutsideColor;
+                }
+
+                return outputColor;
             }
             ENDCG
         }
     }
-    FallBack "Unlit/Transparent"
+    FallBack "Unlit/Texture"
 }
