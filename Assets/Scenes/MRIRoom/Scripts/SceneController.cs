@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour
     public float fadeSpeed = 2f;
     void Start()
     {
-        Invoke("SwitchCameras", 5);  
+        Invoke("SwitchCameras", 5);
     }
 
     public void SwitchCameras()

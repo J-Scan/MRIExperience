@@ -1,10 +1,10 @@
-Shader "Unlit/ViewWindow" {
+Shader "Custom/ViewWindow" {
     Properties {
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _StencilVal ("Stencil Value", Int) = 1
     }
     SubShader {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
         LOD 200
 
         ZWrite Off

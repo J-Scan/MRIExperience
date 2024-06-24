@@ -1,4 +1,4 @@
-Shader "Unlit/TransparentWall" {
+Shader "Custom/TransparentWall" {
     Properties {
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _Color ("Color", Color) = (1, 0, 0, 1)
@@ -6,7 +6,7 @@ Shader "Unlit/TransparentWall" {
         _OutsideColor ("Outside Color", Color) = (1, 1, 1, 1)
     }
     SubShader {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
         LOD 200
 
         Stencil {
@@ -19,7 +19,8 @@ Shader "Unlit/TransparentWall" {
         ZWrite On
 
         Pass {
-            CGPROGRAM
+            Tags{"LightMode" = "UniversalForward"}
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
@@ -30,6 +31,7 @@ Shader "Unlit/TransparentWall" {
             fixed4 _OutsideColor;
             float4 _MainTex_ST;
             int _StencilVal;
+
 
             struct appdata {
                 float4 vertex : POSITION;
@@ -59,8 +61,8 @@ Shader "Unlit/TransparentWall" {
 
                 return outputColor;
             }
-            ENDCG
+
+            ENDHLSL
         }
     }
-    FallBack "Unlit/Texture"
 }
