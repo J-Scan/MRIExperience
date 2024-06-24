@@ -17,7 +17,7 @@ Shader "Custom/ViewWindow" {
                 Pass Replace
             }
 
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
@@ -46,8 +46,7 @@ Shader "Custom/ViewWindow" {
             fixed4 frag (v2f i) : SV_Target {
                 return tex2D(_MainTex, i.uv);
             }
-            ENDCG
+            ENDHLSL
         }
     }
-    FallBack "Unlit/Texture"
 }

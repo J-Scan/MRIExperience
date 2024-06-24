@@ -6,16 +6,22 @@ public class MoonMovement : MonoBehaviour
 
     [SerializeField] private Transform moonEndPosition;
     private Vector3 endPosition;
+
     [SerializeField] private float startScale = 1f;
-    [SerializeField] private float endScale = 4f;
-    [SerializeField] private float duration = 62f;
+    [SerializeField] private float endScale = 7f;
+
+    [SerializeField] private float duration = 103f;
+
+    [SerializeField] private float startRotationSpeed = 6f;
 
     private float startTime;
+
     private bool isMoving = false;
 
     void Start()
     {
         startPosition = transform.position;
+
         endPosition = moonEndPosition.position;
 
         StartMovement();
@@ -26,12 +32,16 @@ public class MoonMovement : MonoBehaviour
         if (isMoving)
         {
             float timeElapsed = Time.time - startTime;
+
             float t = Mathf.Clamp01(timeElapsed / duration);
 
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
             float scale = Mathf.Lerp(startScale, endScale, t);
             transform.localScale = new Vector3(scale, scale, scale);
+
+            float rotationSpeed = Mathf.Lerp(startRotationSpeed, 0f, t);
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
             if (timeElapsed >= duration)
             {
