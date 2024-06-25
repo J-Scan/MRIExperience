@@ -21,6 +21,32 @@ public class LocationTransition : MonoBehaviour
         StartCoroutine(GoToFirstLocation(1));
     }
 
+    public void HandleScannerTopCollision()
+    {
+        Transform newTransform = origin;
+        Vector3 newPosition = newTransform.position;
+        newPosition.y = -.5f;
+        origin.position = newPosition;
+        newTransform.position = newPosition;
+        //Recenter(newTransform);
+    }
+
+    public void Recenter(Transform dest)
+    {
+        Vector3 offset = head.position - origin.position;
+        offset.y = 0;
+        origin.position = dest.position - offset;
+
+        Vector3 targetForward = dest.forward;
+        targetForward.y = 0;
+        Vector3 cameraForward = head.forward;
+        cameraForward.y = 0;
+
+        float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
+
+        origin.RotateAround(head.position, Vector3.up, angle);
+    }
+
     public void Recenter()
     {
         //Debug.Log("----Recenter----");
@@ -58,7 +84,7 @@ public class LocationTransition : MonoBehaviour
     {
         locationIndex++;
         //Debug.Log("GoToNextLocation called");
-        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length]));
+        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length], fadeScreen.fadeDuration));
     }
 
     public void ResetCurrentLocation()
@@ -71,11 +97,11 @@ public class LocationTransition : MonoBehaviour
         StartCoroutine(PerformEndLocation());
     }
 
-    public IEnumerator GoToLocation(Transform newLocation)
+    public IEnumerator GoToLocation(Transform newLocation, float fadeTime)
     {
         //Debug.Log("GoToLocation called");
         fadeScreen.FadeOut();
-        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+        yield return new WaitForSeconds(fadeTime);
 
         Recenter();
         //Debug.Log("switched");
