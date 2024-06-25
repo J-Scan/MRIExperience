@@ -25,7 +25,17 @@ public class LocationTransition : MonoBehaviour
     {
         Transform newTransform = origin;
         Vector3 newPosition = newTransform.position;
-        newPosition.y = -.5f;
+        newPosition.y = -.35f;
+        origin.position = newPosition;
+        newTransform.position = newPosition;
+        //Recenter(newTransform);
+    }
+
+    public void HandleScannerBottomCollision()
+    {
+        Transform newTransform = origin;
+        Vector3 newPosition = newTransform.position;
+        newPosition.y = 0.175f;
         origin.position = newPosition;
         newTransform.position = newPosition;
         //Recenter(newTransform);

@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class CollisionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject item1;
     [SerializeField] private GameObject collider1;
+    [SerializeField] private GameObject collider2;
 
     [SerializeField] private LocationTransition locaScript;
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
-        Debug.Log("Collision with: " + other.gameObject);
+        //Debug.Log("Collision with: " + other.gameObject);
         if (other.gameObject == collider1)
         {
-            HandlePlayerTriggerEnter();
+            HandlePlayerTopCollision();
+        }
+
+        if (other.gameObject == collider2)
+        {
+            HandlePlayerBottomCollision();
         }
     }
 
-    public void HandlePlayerTriggerEnter()
+    public void HandlePlayerTopCollision()
     {
         Debug.Log("Player has entered the trigger area.");
         locaScript.HandleScannerTopCollision();
+    }
+
+    public void HandlePlayerBottomCollision()
+    {
+        Debug.Log("Player has entered the trigger area.");
+        locaScript.HandleScannerBottomCollision();
     }
 }

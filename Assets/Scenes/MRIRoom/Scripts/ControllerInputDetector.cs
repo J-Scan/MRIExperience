@@ -10,16 +10,17 @@ public class ControllerInputDetector : MonoBehaviour
     UnityEngine.XR.InputDevice right;
     bool leftInitialized = false;
     bool rightInitialized = false;
-    [SerializeField] private InputActionReference leftJoystickAction;
-    [SerializeField] private InputActionReference leftJoystickActionSimulator;
+    //[SerializeField] private InputActionReference leftJoystickAction;
+    //[SerializeField] private InputActionReference leftJoystickActionSimulator;
 
     void Start()
     {
-        DisableLeftJoystick();
-        DisableSimulatorLeftJoystick();
+        //DisableLeftJoystick();
+        //DisableSimulatorLeftJoystick();
         InitializeDevices();
     }
 
+    /*
     void DisableSimulatorLeftJoystick()
     {
         if (leftJoystickActionSimulator != null)
@@ -43,6 +44,7 @@ public class ControllerInputDetector : MonoBehaviour
             Debug.LogError("Left joystick action reference is not set.");
         }
     }
+    */
 
     void InitializeDevices()
     {
