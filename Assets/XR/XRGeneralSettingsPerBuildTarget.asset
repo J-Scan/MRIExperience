@@ -17,6 +17,24 @@ MonoBehaviour:
   m_AutomaticRunning: 0
   m_Loaders:
   - {fileID: 11400000, guid: 63fdbe3e1c34c8e46ae050fd95a73a32, type: 2}
+  - {fileID: 11400000, guid: 7554ad6feebd3bc4d96ed36ee37c9f02, type: 2}
+--- !u!114 &-3513517522317366234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
+  m_Name: Unknown Providers
+  m_EditorClassIdentifier: 
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 7554ad6feebd3bc4d96ed36ee37c9f02, type: 2}
 --- !u!114 &-2226624951546051125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,6 +52,7 @@ MonoBehaviour:
   m_AutomaticRunning: 0
   m_Loaders:
   - {fileID: 11400000, guid: 63fdbe3e1c34c8e46ae050fd95a73a32, type: 2}
+  - {fileID: 11400000, guid: 7554ad6feebd3bc4d96ed36ee37c9f02, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,10 +65,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2dc886499c26824283350fa532d087d, type: 3}
   m_Name: XRGeneralSettingsPerBuildTarget
   m_EditorClassIdentifier: 
-  Keys: 0700000001000000
+  Keys: 070000000100000000000000
   Values:
   - {fileID: 5298286727110907021}
   - {fileID: 7067650990494287868}
+  - {fileID: 6293887365824470189}
 --- !u!114 &5298286727110907021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +83,20 @@ MonoBehaviour:
   m_Name: Android Settings
   m_EditorClassIdentifier: 
   m_LoaderManagerInstance: {fileID: -5788982885240666703}
+  m_InitManagerOnStart: 1
+--- !u!114 &6293887365824470189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
+  m_Name: Unknown Settings
+  m_EditorClassIdentifier: 
+  m_LoaderManagerInstance: {fileID: -3513517522317366234}
   m_InitManagerOnStart: 1
 --- !u!114 &7067650990494287868
 MonoBehaviour:
