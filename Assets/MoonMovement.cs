@@ -14,6 +14,11 @@ public class MoonMovement : MonoBehaviour
 
     [SerializeField] private float startRotationSpeed = 6f;
 
+    [SerializeField] private GameObject targetCollider;
+    [SerializeField] private float startTargetColliderScale = 0.01f;
+    [SerializeField] private float endTargetColliderScale = 0.001f;
+
+
     private float startTime;
 
     private bool isMoving = false;
@@ -40,6 +45,9 @@ public class MoonMovement : MonoBehaviour
             float scale = Mathf.Lerp(startScale, endScale, t);
             transform.localScale = new Vector3(scale, scale, scale);
 
+            float targetColliderScale = Mathf.Lerp(startTargetColliderScale, endTargetColliderScale, t);
+            targetCollider.transform.localScale = new Vector3(targetColliderScale, targetColliderScale, targetColliderScale);
+
             float rotationSpeed = Mathf.Lerp(startRotationSpeed, 0f, t);
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
@@ -54,6 +62,7 @@ public class MoonMovement : MonoBehaviour
     {
         transform.position = startPosition;
         transform.localScale = new Vector3(startScale, startScale, startScale);
+        targetCollider.transform.localScale = new Vector3(startTargetColliderScale, startTargetColliderScale, startTargetColliderScale);
 
         startTime = Time.time;
         isMoving = true;
