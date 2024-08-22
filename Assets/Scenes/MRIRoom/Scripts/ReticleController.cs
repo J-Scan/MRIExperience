@@ -9,44 +9,20 @@ public class ReticleController : MonoBehaviour
     private GameObject crosshair; // The GameObject of the reticle
 
     [SerializeField]
-    private float maxDistance = 10f; // Maximum distance of the ray
-
-    [SerializeField]
-    private LayerMask collisionMask; // Layer mask to filter collisions
-
-    [SerializeField]
     private Camera CameraFacing;
 
     private Vector3 originalScale;
-
-    //private float fixedDistance = 2f;
+    private Vector3 currentScale;
+    private Vector3 lastKnownPosition;
+    private float lastKnownDistance;
 
     void Start()
     {
         originalScale = transform.localScale;
+        currentScale = originalScale;
+        lastKnownPosition = transform.position;
+        lastKnownDistance = CameraFacing.farClipPlane * 0.55f;
     }
-
-    /*
-        private void Update()
-        {
-            if (rayInteractor == null || crosshair == null)
-            {
-                Debug.LogError("RayInteractor or Crosshair is not assigned.");
-                return;
-            }
-
-            // Positionne le réticule à une distance fixe devant la caméra
-            Vector3 fixedPosition = CameraFacing.transform.position + CameraFacing.transform.forward * fixedDistance;
-
-            // Positionne et oriente le réticule vers la caméra
-            transform.position = fixedPosition;
-            transform.LookAt(CameraFacing.transform.position);
-            transform.Rotate(0f, 180f, 0f);
-
-            // Conserve la taille d'origine du réticule
-            transform.localScale = originalScale;
-        }
-    */
 
     private void Update()
     {
@@ -63,35 +39,35 @@ public class ReticleController : MonoBehaviour
 
         // Raycast to detect collisions
         RaycastHit hitInfo;
-        //if (Physics.Raycast(rayOrigin, rayDirection, out hitInfo, maxDistance, collisionMask))
         if (Physics.Raycast(rayOrigin, rayDirection, out hitInfo))
         {
-            // If a collision is detected, position the reticle at the collision point
-            //crosshair.transform.position = hitInfo.point;
-
-            distance = hitInfo.distance;
+            // If a collision is detected, smoothly transition to the new position
+            lastKnownPosition = hitInfo.point;
+            lastKnownDistance = hitInfo.distance;
         }
         else
         {
-            // Otherwise, position the reticle at the maximum distance of the ray
-            //crosshair.transform.position = rayOrigin + rayDirection * maxDistance;
-            distance = CameraFacing.farClipPlane * 0.55f;
+            // Otherwise, use the last known position, extending towards the far clip plane
+            lastKnownPosition = rayOrigin + rayDirection * CameraFacing.farClipPlane * 0.95f;
+            lastKnownDistance = CameraFacing.farClipPlane * 0.95f;
         }
 
-        // Ensure the reticle is oriented towards the camera for consistent visibility
-        //crosshair.transform.rotation = Quaternion.LookRotation(rayDirection, Vector3.up);
+        // Non-linear scaling factor to reduce "slipping" effect
+        if (lastKnownDistance < 10)
+        {
+            lastKnownDistance *= 1 + 5 * Mathf.Exp(-lastKnownDistance);
+        }
 
-        transform.position = CameraFacing.transform.position + 
-            CameraFacing.transform.rotation * Vector3.forward * distance;
+        // Smoothly adjust the scale to reduce abrupt changes
+        float smoothFactor = 0.1f; // Adjust the smoothness as needed
+        currentScale = Vector3.Lerp(currentScale, originalScale * lastKnownDistance, smoothFactor);
+        transform.localScale = currentScale;
+
+        // Smoothly transition to the new reticle position
+        transform.position = Vector3.Lerp(transform.position, lastKnownPosition, smoothFactor);
+
+        // Ensure the reticle is oriented towards the camera for consistent visibility
         transform.LookAt(CameraFacing.transform.position);
         transform.Rotate(0f, 180f, 0f);
-        //
-        //if (distance < 10)
-        //{
-        //    distance *= 1 + 5*Mathf.Exp(-distance);
-        //}
-        
-        transform.localScale = originalScale * distance;
     }
-
 }

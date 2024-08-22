@@ -7,17 +7,16 @@ public class MoonMovement : MonoBehaviour
     [SerializeField] private Transform moonEndPosition;
     private Vector3 endPosition;
 
-    [SerializeField] private float startScale = 1f;
-    [SerializeField] private float endScale = 7f;
+    [SerializeField] private Vector3 startScale = new Vector3(1f, 1f, 1f);
+    [SerializeField] private Vector3 endScale = new Vector3(7f, 7f, 7f);
 
     [SerializeField] private float duration = 103f;
 
     [SerializeField] private float startRotationSpeed = 6f;
 
     [SerializeField] private GameObject targetCollider;
-    [SerializeField] private float startTargetColliderScale = 0.01f;
-    [SerializeField] private float endTargetColliderScale = 0.001f;
-
+    [SerializeField] private Vector3 startTargetColliderScale = new Vector3(0.01f, 0.01f, 0.01f);
+    [SerializeField] private Vector3 endTargetColliderScale = new Vector3(0.001f, 0.001f, 0.001f);
 
     private float startTime;
 
@@ -42,11 +41,11 @@ public class MoonMovement : MonoBehaviour
 
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
 
-            float scale = Mathf.Lerp(startScale, endScale, t);
-            transform.localScale = new Vector3(scale, scale, scale);
+            Vector3 scale = Vector3.Lerp(startScale, endScale, t);
+            transform.localScale = scale;
 
-            float targetColliderScale = Mathf.Lerp(startTargetColliderScale, endTargetColliderScale, t);
-            targetCollider.transform.localScale = new Vector3(targetColliderScale, targetColliderScale, targetColliderScale);
+            Vector3 targetColliderScale = Vector3.Lerp(startTargetColliderScale, endTargetColliderScale, t);
+            targetCollider.transform.localScale = targetColliderScale;
 
             float rotationSpeed = Mathf.Lerp(startRotationSpeed, 0f, t);
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
@@ -61,8 +60,8 @@ public class MoonMovement : MonoBehaviour
     public void StartMovement()
     {
         transform.position = startPosition;
-        transform.localScale = new Vector3(startScale, startScale, startScale);
-        targetCollider.transform.localScale = new Vector3(startTargetColliderScale, startTargetColliderScale, startTargetColliderScale);
+        transform.localScale = startScale;
+        targetCollider.transform.localScale = startTargetColliderScale;
 
         startTime = Time.time;
         isMoving = true;
