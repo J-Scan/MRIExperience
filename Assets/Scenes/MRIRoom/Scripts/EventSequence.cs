@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Malee.List;
+
 #if UNITY_EDITOR
 using UnityEditor;
-using Malee.Editor;
 #endif
 
 public class EventSequence : MonoBehaviour {
