@@ -22,6 +22,11 @@ class ManagedAudioSource : MonoBehaviour
             playing = true;
             OnStartPlayback.Invoke();
         }
+        public void PlayFromInspector(AudioClip clip)
+        {
+            this.Play(clip, 1);
+        }
+
         void Update()
         {
             if (!playing) return;
