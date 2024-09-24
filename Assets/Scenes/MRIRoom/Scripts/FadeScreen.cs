@@ -28,6 +28,19 @@ public class FadeScreen : MonoBehaviour
         Fade(0, 1);
     }
 
+    public void DoFadeInOut()
+    {
+        StartCoroutine(FadeInOut(fadeDuration));
+    }
+
+    public IEnumerator FadeInOut(float fadeTime)
+    {
+        //Debug.Log("GoToLocation called");
+        FadeOut();
+        yield return new WaitForSeconds(fadeTime);
+        FadeIn();
+    }
+
     public void Fade(float alphaIn, float alphaOut)
     {
         StartCoroutine(FadeRoutine(alphaIn, alphaOut));
