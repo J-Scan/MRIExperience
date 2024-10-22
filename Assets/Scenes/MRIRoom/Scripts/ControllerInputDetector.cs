@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class ControllerInputDetector : MonoBehaviour
 {
@@ -10,8 +11,16 @@ public class ControllerInputDetector : MonoBehaviour
     UnityEngine.XR.InputDevice right;
     bool leftInitialized = false;
     bool rightInitialized = false;
+
+    private float holdTimeThreshold = 2.0f;
+    private float buttonHoldTimeL = 0.0f;
+    private float buttonHoldTimeR = 0.0f;
+
     //[SerializeField] private InputActionReference leftJoystickAction;
     //[SerializeField] private InputActionReference leftJoystickActionSimulator;
+
+    [SerializeField] UnityEvent OnPrimaryButtonPressed;
+    [SerializeField] UnityEvent OnTriggerButtonHeld;
 
     void Start()
     {
@@ -77,9 +86,13 @@ public class ControllerInputDetector : MonoBehaviour
             right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedR);
             if (isPressedR)
             {
-                GetComponent<LocationTransition>().Recenter();
+                //GetComponent<LocationTransition>().Recenter();
+                OnPrimaryButtonPressed.Invoke();
                 return;
             }
+
+            right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRT);
+            HandleHoldInput(isPressedRT, ref buttonHoldTimeR);
         }
 
         if (leftInitialized)
@@ -87,8 +100,37 @@ public class ControllerInputDetector : MonoBehaviour
             left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedL);
             if (isPressedL)
             {
-                GetComponent<LocationTransition>().Recenter();
+                //GetComponent<LocationTransition>().Recenter();
+                OnPrimaryButtonPressed.Invoke();
+                return;
+            }
+
+            left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedLT);
+            HandleHoldInput(isPressedLT, ref buttonHoldTimeL);
+        }
+    }
+
+    private void HandleHoldInput(bool isPressed, ref float buttonHoldTime)
+    {
+        if (isPressed)
+        {
+            buttonHoldTime += Time.deltaTime;
+
+            if (buttonHoldTime >= holdTimeThreshold)
+            {
+                OnHoldTriggered();
+                buttonHoldTime = 0.0f;
             }
         }
+        else
+        {
+            buttonHoldTime = 0.0f;
+        }
+    }
+
+    private void OnHoldTriggered()
+    {
+        Debug.Log("Trigger button held long enough, triggering action.");
+        OnTriggerButtonHeld.Invoke();
     }
 }
