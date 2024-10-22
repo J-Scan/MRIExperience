@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CountdownAudioPlayer : MonoBehaviour
 {
-    [SerializeField] private List<AudioClip> audioClips;  // List of audio clips to play, set in the inspector
-    [SerializeField] private AudioSource audioSource;     // The AudioSource component, set in the inspector or automatically found
+    [SerializeField] private List<AudioClip> audioClips;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] UnityEvent OnFinishPlayback;
 
-    private Coroutine countdownCoroutine;                 // Coroutine for countdown
-    private float countdownTime = 30f;                    // The countdown duration (30 seconds)
-    private bool isStoppedExternally = false;             // To track if the countdown was stopped externally
-    private int currentClipIndex = 0;                     // Index to track the current audio clip
+    private Coroutine countdownCoroutine;
+    private Coroutine audioLoopCoroutine;
+    private float countdownTime = 30f;
+    private bool isStoppedExternally = false;
+    private int currentClipIndex = 0;
+
+    bool playing;
 
     void Start()
     {
-        // Ensure the AudioSource component is available (auto-assign if not set in inspector)
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -30,82 +34,159 @@ public class CountdownAudioPlayer : MonoBehaviour
         this.countdownTime = countDownTime;
     }
 
-    // Function to start the countdown
-    public void StartCountdown()
+    public void PlayNextClipAfterCountdown()
     {
-        // If a countdown is already running, stop it before starting a new one
         if (countdownCoroutine != null)
         {
             StopCoroutine(countdownCoroutine);
         }
 
-        // Start a new countdown
         countdownCoroutine = StartCoroutine(CountdownRoutine());
     }
 
-    // Countdown routine that runs for 30 seconds
     private IEnumerator CountdownRoutine()
     {
         float timer = countdownTime;
-        isStoppedExternally = false;  // Reset external stop flag
+        isStoppedExternally = false;
 
         while (timer > 0f)
         {
-            // Wait for 1 second each frame to reduce the timer
             yield return new WaitForSeconds(1f);
             timer--;
 
-            // If stopped externally, reset the countdown and stop here
             if (isStoppedExternally)
             {
-                Debug.Log("Countdown stopped externally and reset.");
                 yield break;
             }
         }
 
-        // After 30 seconds, if no external stop occurred, play the current audio clip
         PlayNextAudioClip();
     }
 
-    // Stop the countdown from an external trigger
     public void StopCountdownExternally()
     {
         if (countdownCoroutine != null)
         {
-            isStoppedExternally = true;  // Mark it as externally stopped
+            isStoppedExternally = true;
             StopCoroutine(countdownCoroutine);
             countdownCoroutine = null;
         }
+
+        if (audioLoopCoroutine != null)
+        {
+            StopCoroutine(audioLoopCoroutine);
+            audioLoopCoroutine = null;
+        }
     }
 
-    // Function to play the next audio clip in the list
     private void PlayNextAudioClip()
     {
         if (audioClips != null && audioClips.Count > 0)
         {
             if (audioSource != null)
             {
-                // Play the current clip based on the currentClipIndex
+                currentClipIndex = (currentClipIndex + 1) % audioClips.Count;
                 audioSource.clip = audioClips[currentClipIndex];
                 audioSource.Play();
-                Debug.Log($"Playing audio clip {currentClipIndex + 1}: {audioClips[currentClipIndex].name}");
-
-                // Move to the next clip in the list, looping back to the first if at the end
-                currentClipIndex = (currentClipIndex + 1) % audioClips.Count;
+                playing = true;
             }
-        }
-        else
-        {
-            Debug.LogWarning("No audio clips are set in the list.");
         }
     }
 
-    // Optional: Function to stop the current audio being played
     public void StopAudio()
     {
         if (audioSource != null && audioSource.isPlaying)
         {
             audioSource.Stop();
+            playing = false;
+            //OnFinishPlayback.Invoke();
+        }
+    }
+
+    public void PlaySpecificClipAfterCountdown(int clipIndex)
+    {
+        if (clipIndex < 0 || clipIndex >= audioClips.Count)
+        {
+            return;
+        }
+
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+        }
+
+        countdownCoroutine = StartCoroutine(PlaySpecificClipAfterCountdownRoutine(clipIndex));
+    }
+
+    private IEnumerator PlaySpecificClipAfterCountdownRoutine(int clipIndex)
+    {
+        float timer = countdownTime;
+        isStoppedExternally = false;
+
+        while (timer > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+            timer--;
+
+            if (isStoppedExternally)
+            {
+                yield break;
+            }
+        }
+
+        if (!isStoppedExternally)
+        {
+            audioSource.clip = audioClips[clipIndex];
+            audioSource.Play();
+            playing = true;
+        }
+    }
+
+    public void PlaySpecificClipInLoopAfterCountdown(int clipIndex)
+    {
+        if (clipIndex < 0 || clipIndex >= audioClips.Count)
+        {
+            return;
+        }
+
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+        }
+
+        countdownCoroutine = StartCoroutine(PlaySpecificClipInLoopAfterCountdownRoutine(clipIndex));
+    }
+
+    private IEnumerator PlaySpecificClipInLoopAfterCountdownRoutine(int clipIndex)
+    {
+        while (!isStoppedExternally)
+        {
+            // Attendre que le clip se termine
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            // Attendre 30 secondes
+            yield return new WaitForSeconds(countdownTime);
+
+            if (!isStoppedExternally)
+            {
+                audioSource.clip = audioClips[clipIndex];
+                audioSource.Play();
+                playing = true;
+            }
+        }
+    }
+
+
+    void Update()
+    {
+        if (!playing) return;
+
+        // Check if the AudioSource is still playing
+        if (!audioSource.isPlaying)
+        {
+            playing = false;
+            isStoppedExternally = false;
+            OnFinishPlayback.Invoke();
         }
     }
 }
