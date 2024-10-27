@@ -5,12 +5,14 @@ public class DragXRRig : MonoBehaviour
 {
     [SerializeField] private Transform xRRigTransform;
     [SerializeField] private float dragSpeed = 1.0f;
+    [SerializeField] private Transform bedInitialPosition;
 
     private Vector3 previousPosition;
     private bool isDragging = false;
 
     void Start()
     {
+        transform.position = bedInitialPosition.position;
         previousPosition = transform.position;
     }
 
@@ -22,7 +24,7 @@ public class DragXRRig : MonoBehaviour
         }
     }
 
-    void PerformDragging()
+    public void PerformDragging()
     {
         //Debug.Log("Perform Dragging..");
         previousPosition = transform.position;

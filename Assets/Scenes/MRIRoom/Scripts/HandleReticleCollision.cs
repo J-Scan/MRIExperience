@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.Events;
 
 public class HandleReticleCollision : MonoBehaviour
 {
@@ -10,13 +11,23 @@ public class HandleReticleCollision : MonoBehaviour
     [SerializeField] private GameObject FixationCross;
     [SerializeField] private Material CorrectFeedbackMaterial;
     [SerializeField] private Material IncorrectFeedbackMaterial;
+    [SerializeField] UnityEvent OnStart;
+    [SerializeField] UnityEvent OnCorrectFeedback;
+    [SerializeField] UnityEvent OnIncorrectFeedback;
+    [SerializeField] UnityEvent OnTrajectoryCorrected;
 
     private XRRayInteractor rayInteractor;
     private XRSimpleInteractable moonInteractable;
     private Material fixationCross;
     private bool isHoveringMoonTarget = false;
+    private bool previousFeedbackWasIncorrect = false;
 
-    private void Start()
+    public void Start()
+    {
+
+    }
+
+    public void Init()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
         if (rayInteractor == null)
@@ -38,6 +49,8 @@ public class HandleReticleCollision : MonoBehaviour
             Debug.LogError("SpriteRenderer component not found on the FixationCross.");
             return;
         }
+
+        OnStart.Invoke();
 
         // Subscribe to interaction events
         rayInteractor.hoverEntered.AddListener(OnInteractorHoverEntered);
@@ -68,7 +81,12 @@ public class HandleReticleCollision : MonoBehaviour
 
     private void HandleCorrectFeedback()
     {
-        Debug.Log("Inside Handle Correct Feedback");
+
+        if (previousFeedbackWasIncorrect)
+        {
+            OnTrajectoryCorrected.Invoke();
+        }
+
         foreach (Transform child in FeedbackGO.transform)
         {
             Renderer childRenderer = child.GetComponent<Renderer>();
@@ -78,22 +96,25 @@ public class HandleReticleCollision : MonoBehaviour
             }
         }
         fixationCross.SetColor("_Color", Color.green);
+        OnCorrectFeedback.Invoke();
+
+
+        previousFeedbackWasIncorrect = false;
     }
 
     private void HandleIncorrectFeedback()
     {
-        Debug.Log("Inside Handle Incorrect Feedback");
-        if (!isHoveringMoonTarget)
+        foreach (Transform child in FeedbackGO.transform)
         {
-            foreach (Transform child in FeedbackGO.transform)
+            Renderer childRenderer = child.GetComponent<Renderer>();
+            if (childRenderer != null)
             {
-                Renderer childRenderer = child.GetComponent<Renderer>();
-                if (childRenderer != null)
-                {
-                    childRenderer.material = IncorrectFeedbackMaterial;
-                }
+                childRenderer.material = IncorrectFeedbackMaterial;
             }
         }
         fixationCross.SetColor("_Color", Color.red);
+        OnIncorrectFeedback.Invoke();
+
+        previousFeedbackWasIncorrect = true;
     }
 }

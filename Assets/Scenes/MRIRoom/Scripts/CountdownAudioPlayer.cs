@@ -29,38 +29,57 @@ public class CountdownAudioPlayer : MonoBehaviour
         }
     }
 
+    public void SetCurrentClipIndex(int clipIndex)
+    {
+        this.currentClipIndex = clipIndex;
+    }
+
     public void SetCountDownTimer(float countDownTime)
     {
         this.countdownTime = countDownTime;
     }
 
-    public void PlayNextClipAfterCountdown()
+    public void PlayNextClipAfterCountdownUntilStop(int clipIndexStart)
+    {
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+        }
+        currentClipIndex = clipIndexStart;
+        countdownCoroutine = StartCoroutine(CountdownRoutineUntilStop());
+    }
+
+
+    public void PlayNextClipAfterCountdownUntilStop()
     {
         if (countdownCoroutine != null)
         {
             StopCoroutine(countdownCoroutine);
         }
 
-        countdownCoroutine = StartCoroutine(CountdownRoutine());
+        countdownCoroutine = StartCoroutine(CountdownRoutineUntilStop());
     }
 
-    private IEnumerator CountdownRoutine()
+    private IEnumerator CountdownRoutineUntilStop()
     {
-        float timer = countdownTime;
-        isStoppedExternally = false;
-
-        while (timer > 0f)
+        while (!isStoppedExternally)
         {
-            yield return new WaitForSeconds(1f);
-            timer--;
+            yield return new WaitWhile(() => audioSource.isPlaying);
 
-            if (isStoppedExternally)
+            yield return new WaitForSeconds(countdownTime);
+
+            if (currentClipIndex >= audioClips.Count)
             {
-                yield break;
+                currentClipIndex = 0;
+            }
+            if (!isStoppedExternally)
+            {
+                audioSource.clip = audioClips[currentClipIndex];
+                audioSource.Play();
+                playing = true;
+                currentClipIndex = currentClipIndex + 1;
             }
         }
-
-        PlayNextAudioClip();
     }
 
     public void StopCountdownExternally()

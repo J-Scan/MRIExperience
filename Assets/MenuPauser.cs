@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
+using UnityEngine.Events;
 
 public class MenuPauser : MonoBehaviour
 {
 
     [SerializeField] private GameObject menuCanvas;
+    [SerializeField] UnityEvent OnFinishPlayback;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class MenuPauser : MonoBehaviour
     {
         DisplayMenuInFront();
         PauseGame();
+        OnFinishPlayback.Invoke();
     }
 
     public void DisplayMenuInFront()

@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MoonMovement : MonoBehaviour
 {
     private Vector3 startPosition;
 
+    [SerializeField] private Transform moonStartPosition;
     [SerializeField] private Transform moonEndPosition;
     private Vector3 endPosition;
 
@@ -18,17 +20,15 @@ public class MoonMovement : MonoBehaviour
     [SerializeField] private Vector3 startTargetColliderScale = new Vector3(0.01f, 0.01f, 0.01f);
     [SerializeField] private Vector3 endTargetColliderScale = new Vector3(0.001f, 0.001f, 0.001f);
 
+    [SerializeField] UnityEvent OnFinishPlayback;
+
     private float startTime;
 
     private bool isMoving = false;
 
     void Start()
     {
-        startPosition = transform.position;
 
-        endPosition = moonEndPosition.position;
-
-        StartMovement();
     }
 
     void Update()
@@ -52,13 +52,22 @@ public class MoonMovement : MonoBehaviour
 
             if (timeElapsed >= duration)
             {
-                isMoving = false;
+                OnFinish();
             }
         }
     }
 
+    public void OnFinish()
+    {
+        isMoving = false;
+        OnFinishPlayback.Invoke();
+    }
+
     public void StartMovement()
     {
+        startPosition = moonStartPosition.position;
+        endPosition = moonEndPosition.position;
+
         transform.position = startPosition;
         transform.localScale = startScale;
         targetCollider.transform.localScale = startTargetColliderScale;
