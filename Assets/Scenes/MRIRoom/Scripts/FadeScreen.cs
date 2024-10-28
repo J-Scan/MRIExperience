@@ -50,10 +50,10 @@ public class FadeScreen : MonoBehaviour
     {
         GetComponent<MeshRenderer>().enabled = true;
         float timer = 0;
-        while(timer <= fadeDuration)
+        while (timer <= fadeDuration)
         {
             Color newColor = fadeColor;
-            newColor.a = Mathf.Lerp(alphaIn, alphaOut, timer/fadeDuration);
+            newColor.a = Mathf.Lerp(alphaIn, alphaOut, timer / fadeDuration);
 
             rend.material.SetColor("_Color", newColor);
 

@@ -9,6 +9,7 @@ public class MenuPauser : MonoBehaviour
 {
 
     [SerializeField] private GameObject menuCanvas;
+    [SerializeField] UnityEvent OnEnterPause;
     [SerializeField] UnityEvent OnFinishPlayback;
     // Start is called before the first frame update
     void Start()
@@ -25,12 +26,13 @@ public class MenuPauser : MonoBehaviour
     public void StartPause()
     {
         DisplayMenuInFront();
-        PauseGame();
         OnFinishPlayback.Invoke();
+        PauseGame();
     }
 
     public void DisplayMenuInFront()
     {
+        OnEnterPause.Invoke();
         Vector3 vHeadPos = Camera.main.transform.position;
         Vector3 vGazeDir = Camera.main.transform.forward;
         menuCanvas.transform.position = (vHeadPos + vGazeDir * 3.0f) + new Vector3(0.0f, -.40f, 0.0f);
@@ -42,6 +44,12 @@ public class MenuPauser : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0.0f;
+        //And you should also cancel any input to the game.
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1.0f;
         //And you should also cancel any input to the game.
     }
 }

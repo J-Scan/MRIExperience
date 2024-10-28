@@ -92,7 +92,7 @@ public class ControllerInputDetector : MonoBehaviour
             }
 
             right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRT);
-            HandleHoldInput(isPressedRT, ref buttonHoldTimeR);
+            HandleHoldInput(isPressedRT, false);
         }
 
         if (leftInitialized)
@@ -106,27 +106,51 @@ public class ControllerInputDetector : MonoBehaviour
             }
 
             left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedLT);
-            HandleHoldInput(isPressedLT, ref buttonHoldTimeL);
+            HandleHoldInput(isPressedLT, true);
         }
     }
 
-    private void HandleHoldInput(bool isPressed, ref float buttonHoldTime)
+    private void HandleHoldInput(bool isPressed, bool isLeft)
     {
         if (isPressed)
         {
-            buttonHoldTime += Time.deltaTime;
-
-            if (buttonHoldTime >= holdTimeThreshold)
+            if (isLeft)
             {
-                OnHoldTriggered();
-                buttonHoldTime = 0.0f;
+                buttonHoldTimeL += Time.deltaTime;
+                Debug.Log("Left button hold time: " + buttonHoldTimeL);
+
+                if (buttonHoldTimeL >= holdTimeThreshold)
+                {
+                    OnHoldTriggered();
+                    buttonHoldTimeL = 0.0f; // Reset after triggering the event
+                }
+            }
+            else
+            {
+                buttonHoldTimeR += Time.deltaTime;
+                Debug.Log("Right button hold time: " + buttonHoldTimeR);
+
+                if (buttonHoldTimeR >= holdTimeThreshold)
+                {
+                    OnHoldTriggered();
+                    buttonHoldTimeR = 0.0f; // Reset after triggering the event
+                }
             }
         }
         else
         {
-            buttonHoldTime = 0.0f;
+            // Reset hold time only if the button is released
+            if (isLeft)
+            {
+                buttonHoldTimeL = 0.0f;
+            }
+            else
+            {
+                buttonHoldTimeR = 0.0f;
+            }
         }
     }
+
 
     private void OnHoldTriggered()
     {
