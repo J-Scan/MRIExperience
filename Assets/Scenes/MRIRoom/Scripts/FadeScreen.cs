@@ -18,6 +18,11 @@ public class FadeScreen : MonoBehaviour
         }
     }
 
+    public void SetFadeRation(float duration)
+    {
+        fadeDuration = duration;
+    }
+
     public void FadeIn()
     {
         Fade(1, 0);

@@ -31,7 +31,7 @@ public class HandleCollisionDetectionWithEvents : MonoBehaviour
     {
         if (onCollisionEnterEvent != null)
         {
-            Debug.Log("Collision detected with: " + other.gameObject.name);
+            //Debug.Log("Collision detected with: " + other.gameObject.name);
             foreach (Collider collider in collidersToMonitor)
             {
                 if (other.GetComponent<Collider>() == collider)

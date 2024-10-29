@@ -9,6 +9,7 @@ public class MenuPauser : MonoBehaviour
 {
 
     [SerializeField] private GameObject menuCanvas;
+    [SerializeField] private GameObject menuCamera;
     [SerializeField] UnityEvent OnEnterPause;
     [SerializeField] UnityEvent OnFinishPause;
     private bool inPause = false;
@@ -21,7 +22,7 @@ public class MenuPauser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PerformPauseAction()
@@ -40,6 +41,7 @@ public class MenuPauser : MonoBehaviour
     {
         DesactivateMenuInFront();
         UnpauseGame();
+        menuCamera.SetActive(false);
         OnFinishPause.Invoke();
         inPause = false;
     }
@@ -51,20 +53,21 @@ public class MenuPauser : MonoBehaviour
 
     public void StartPause()
     {
+        OnEnterPause.Invoke();
         DisplayMenuInFront();
         PauseGame();
+        menuCanvas.SetActive(true);
+        menuCamera.SetActive(true);
         inPause = true;
     }
 
     public void DisplayMenuInFront()
     {
-        OnEnterPause.Invoke();
         Vector3 vHeadPos = Camera.main.transform.position;
         Vector3 vGazeDir = Camera.main.transform.forward;
         menuCanvas.transform.position = (vHeadPos + vGazeDir * 3.0f) + new Vector3(0.0f, -.40f, 0.0f);
         Vector3 vRot = Camera.main.transform.eulerAngles; vRot.z = 0;
         menuCanvas.transform.eulerAngles = vRot;
-        menuCanvas.SetActive(true);
     }
 
     public void PauseGame()
