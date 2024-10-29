@@ -15,6 +15,7 @@ public class ControllerInputDetector : MonoBehaviour
     private float holdTimeThreshold = 2.0f;
     private float buttonHoldTimeL = 0.0f;
     private float buttonHoldTimeR = 0.0f;
+    private bool holdingDetected = false;
 
     //[SerializeField] private InputActionReference leftJoystickAction;
     //[SerializeField] private InputActionReference leftJoystickActionSimulator;
@@ -112,34 +113,35 @@ public class ControllerInputDetector : MonoBehaviour
 
     private void HandleHoldInput(bool isPressed, bool isLeft)
     {
-        if (isPressed)
+        if (isPressed && !holdingDetected)
         {
             if (isLeft)
             {
-                buttonHoldTimeL += Time.deltaTime;
-                Debug.Log("Left button hold time: " + buttonHoldTimeL);
+                buttonHoldTimeL += Time.unscaledDeltaTime;
+                //Debug.Log("Left button hold time: " + buttonHoldTimeL);
 
                 if (buttonHoldTimeL >= holdTimeThreshold)
                 {
                     OnHoldTriggered();
-                    buttonHoldTimeL = 0.0f; // Reset after triggering the event
+                    holdingDetected = true;
+                    buttonHoldTimeL = 0.0f;
                 }
             }
             else
             {
-                buttonHoldTimeR += Time.deltaTime;
-                Debug.Log("Right button hold time: " + buttonHoldTimeR);
+                buttonHoldTimeR += Time.unscaledDeltaTime;
+                //Debug.Log("Right button hold time: " + buttonHoldTimeR);
 
                 if (buttonHoldTimeR >= holdTimeThreshold)
                 {
                     OnHoldTriggered();
-                    buttonHoldTimeR = 0.0f; // Reset after triggering the event
+                    holdingDetected = true;
+                    buttonHoldTimeR = 0.0f;
                 }
             }
         }
-        else
+        else if (!isPressed)
         {
-            // Reset hold time only if the button is released
             if (isLeft)
             {
                 buttonHoldTimeL = 0.0f;
@@ -148,13 +150,16 @@ public class ControllerInputDetector : MonoBehaviour
             {
                 buttonHoldTimeR = 0.0f;
             }
+            holdingDetected = false;
         }
     }
 
 
+
+
     private void OnHoldTriggered()
     {
-        Debug.Log("Trigger button held long enough, triggering action.");
         OnTriggerButtonHeld.Invoke();
+        holdingDetected = true;
     }
 }
