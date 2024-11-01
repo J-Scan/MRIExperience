@@ -39,6 +39,7 @@ public class CountdownAudioPlayer : MonoBehaviour
         this.countdownTime = countDownTime;
     }
 
+    /*
     public void PlayNextClipAfterCountdownUntilStop(int clipIndexStart)
     {
         if (countdownCoroutine != null)
@@ -48,39 +49,8 @@ public class CountdownAudioPlayer : MonoBehaviour
         currentClipIndex = clipIndexStart;
         countdownCoroutine = StartCoroutine(CountdownRoutineUntilStop());
     }
+    */
 
-
-    public void PlayNextClipAfterCountdownUntilStop()
-    {
-        if (countdownCoroutine != null)
-        {
-            StopCoroutine(countdownCoroutine);
-        }
-
-        countdownCoroutine = StartCoroutine(CountdownRoutineUntilStop());
-    }
-
-    private IEnumerator CountdownRoutineUntilStop()
-    {
-        while (!isStoppedExternally)
-        {
-            yield return new WaitWhile(() => audioSource.isPlaying);
-
-            yield return new WaitForSeconds(countdownTime);
-
-            if (currentClipIndex >= audioClips.Count)
-            {
-                currentClipIndex = 0;
-            }
-            if (!isStoppedExternally)
-            {
-                audioSource.clip = audioClips[currentClipIndex];
-                audioSource.Play();
-                playing = true;
-                currentClipIndex = currentClipIndex + 1;
-            }
-        }
-    }
 
     public void StopCountdownExternally()
     {
@@ -97,7 +67,7 @@ public class CountdownAudioPlayer : MonoBehaviour
             audioLoopCoroutine = null;
         }
     }
-
+    /*
     private void PlayNextAudioClip()
     {
         if (audioClips != null && audioClips.Count > 0)
@@ -111,6 +81,7 @@ public class CountdownAudioPlayer : MonoBehaviour
             }
         }
     }
+    */
 
     public void StopAudio()
     {
@@ -149,6 +120,7 @@ public class CountdownAudioPlayer : MonoBehaviour
 
             if (isStoppedExternally)
             {
+                countdownCoroutine = null;
                 yield break;
             }
         }
@@ -168,9 +140,12 @@ public class CountdownAudioPlayer : MonoBehaviour
             return;
         }
 
+        isStoppedExternally = false;
+        Debug.Log("Before coroutine");
+
         if (countdownCoroutine != null)
         {
-            StopCoroutine(countdownCoroutine);
+            StopCountdownExternally();
         }
 
         countdownCoroutine = StartCoroutine(PlaySpecificClipInLoopAfterCountdownRoutine(clipIndex));
@@ -178,6 +153,7 @@ public class CountdownAudioPlayer : MonoBehaviour
 
     private IEnumerator PlaySpecificClipInLoopAfterCountdownRoutine(int clipIndex)
     {
+        Debug.Log("Started coroutine");
         while (!isStoppedExternally)
         {
             // Attendre que le clip se termine
@@ -193,6 +169,83 @@ public class CountdownAudioPlayer : MonoBehaviour
                 playing = true;
             }
         }
+        countdownCoroutine = null;
+    }
+
+    public void PlayNextClipAfterCountdown()
+    {
+        Debug.Log("Before coroutine");
+        isStoppedExternally = false;
+        if (countdownCoroutine != null)
+        {
+            StopCountdownExternally();
+        }
+
+        countdownCoroutine = StartCoroutine(CountdownRoutine());
+    }
+
+    private IEnumerator CountdownRoutine()
+    {
+        Debug.Log("Started coroutine");
+        if (!isStoppedExternally)
+        {
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            yield return new WaitForSeconds(countdownTime);
+
+            if (currentClipIndex >= audioClips.Count)
+            {
+                currentClipIndex = 0;
+            }
+            if (!isStoppedExternally)
+            {
+                Debug.Log("is playing: " + audioClips[currentClipIndex] + "at index: " + currentClipIndex);
+                audioSource.clip = audioClips[currentClipIndex];
+                audioSource.Play();
+                playing = true;
+                currentClipIndex = currentClipIndex + 1;
+            }
+        }
+        Debug.Log("Was stopped externally");
+        countdownCoroutine = null;
+    }
+
+    public void PlayNextClipAfterCountdownUntilStop()
+    {
+        Debug.Log("Before coroutine");
+        isStoppedExternally = false;
+        if (countdownCoroutine != null)
+        {
+            StopCountdownExternally();
+        }
+
+        countdownCoroutine = StartCoroutine(CountdownRoutineUntilStop());
+    }
+
+    private IEnumerator CountdownRoutineUntilStop()
+    {
+        Debug.Log("Started coroutine");
+        while (!isStoppedExternally)
+        {
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            yield return new WaitForSeconds(countdownTime);
+
+            if (currentClipIndex >= audioClips.Count)
+            {
+                currentClipIndex = 0;
+            }
+            if (!isStoppedExternally)
+            {
+                Debug.Log("is playing: " + audioClips[currentClipIndex] + "at index: " + currentClipIndex);
+                audioSource.clip = audioClips[currentClipIndex];
+                audioSource.Play();
+                playing = true;
+                currentClipIndex = currentClipIndex + 1;
+            }
+        }
+        Debug.Log("Was stopped externally");
+        countdownCoroutine = null;
     }
 
 

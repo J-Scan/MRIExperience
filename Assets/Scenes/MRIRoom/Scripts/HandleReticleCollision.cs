@@ -22,6 +22,9 @@ public class HandleReticleCollision : MonoBehaviour
     private bool isHoveringMoonTarget = false;
     private bool previousFeedbackWasIncorrect = false;
 
+    private bool isCorrectFeedbackActive = false;
+    private bool isIncorrectFeedbackActive = false;
+
     public void Start()
     {
 
@@ -81,12 +84,6 @@ public class HandleReticleCollision : MonoBehaviour
 
     private void HandleCorrectFeedback()
     {
-
-        if (previousFeedbackWasIncorrect)
-        {
-            OnTrajectoryCorrected.Invoke();
-        }
-
         foreach (Transform child in FeedbackGO.transform)
         {
             Renderer childRenderer = child.GetComponent<Renderer>();
@@ -96,10 +93,8 @@ public class HandleReticleCollision : MonoBehaviour
             }
         }
         fixationCross.SetColor("_Color", Color.green);
-        OnCorrectFeedback.Invoke();
 
-
-        previousFeedbackWasIncorrect = false;
+        HandleCorrectAudio();
     }
 
     private void HandleIncorrectFeedback()
@@ -113,8 +108,30 @@ public class HandleReticleCollision : MonoBehaviour
             }
         }
         fixationCross.SetColor("_Color", Color.red);
-        OnIncorrectFeedback.Invoke();
 
+        HandleIncorrectAudio();
+    }
+
+    private void HandleCorrectAudio()
+    {
+        if (isCorrectFeedbackActive) return;
+
+        if (previousFeedbackWasIncorrect)
+        {
+            OnTrajectoryCorrected.Invoke();
+        }
+        OnCorrectFeedback.Invoke();
+        previousFeedbackWasIncorrect = false;
+        isCorrectFeedbackActive = true;
+        isIncorrectFeedbackActive = false;
+    }
+
+    private void HandleIncorrectAudio()
+    {
+        if (isIncorrectFeedbackActive) return;
+        OnIncorrectFeedback.Invoke();
         previousFeedbackWasIncorrect = true;
+        isIncorrectFeedbackActive = true;
+        isCorrectFeedbackActive = false;
     }
 }
