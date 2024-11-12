@@ -15,6 +15,7 @@ public class HandleReticleCollision : MonoBehaviour
     [SerializeField] UnityEvent OnCorrectFeedback;
     [SerializeField] UnityEvent OnIncorrectFeedback;
     [SerializeField] UnityEvent OnTrajectoryCorrected;
+    [SerializeField] UnityEvent OnExit;
 
     private XRRayInteractor rayInteractor;
     private XRSimpleInteractable moonInteractable;
@@ -133,5 +134,10 @@ public class HandleReticleCollision : MonoBehaviour
         previousFeedbackWasIncorrect = true;
         isIncorrectFeedbackActive = true;
         isCorrectFeedbackActive = false;
+    }
+
+    public void OnDisable()
+    {
+        OnExit.Invoke();
     }
 }
