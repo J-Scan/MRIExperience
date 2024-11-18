@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class CollisionEvent
+{
+    public Collider targetCollider;
+    public UnityEvent onEnterEvent;
+    public UnityEvent onStayEvent;
+    public UnityEvent onExitEvent;
+}
+
 public class HandleCollisionDetectionWithEvents : MonoBehaviour
 {
-
-    [SerializeField] UnityEvent onCollisionEnterEvent;
-    [SerializeField] UnityEvent onCollisionStayEvent;
-    [SerializeField] UnityEvent onCollisionExitEvent;
-
-    [SerializeField] Collider[] collidersToMonitor;
+    [SerializeField] private List<CollisionEvent> collisionEvents = new List<CollisionEvent>();
 
     void Start()
     {
@@ -29,43 +33,42 @@ public class HandleCollisionDetectionWithEvents : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (onCollisionEnterEvent != null)
+        if (!enabled) return;
+
+        foreach (CollisionEvent collisionEvent in collisionEvents)
         {
-            //Debug.Log("Collision detected with: " + other.gameObject.name);
-            foreach (Collider collider in collidersToMonitor)
+            if (other == collisionEvent.targetCollider)
             {
-                if (other.GetComponent<Collider>() == collider)
-                {
-                    onCollisionEnterEvent.Invoke();
-                }
+                collisionEvent.onEnterEvent?.Invoke();
+                break;
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (onCollisionExitEvent != null)
+        if (!enabled) return;
+
+        foreach (CollisionEvent collisionEvent in collisionEvents)
         {
-            foreach (Collider collider in collidersToMonitor)
+            if (other == collisionEvent.targetCollider)
             {
-                if (other.GetComponent<Collider>() == collider)
-                {
-                    onCollisionExitEvent.Invoke();
-                }
+                collisionEvent.onExitEvent?.Invoke();
+                break;
             }
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (onCollisionStayEvent != null)
+        if (!enabled) return;
+
+        foreach (CollisionEvent collisionEvent in collisionEvents)
         {
-            foreach (Collider collider in collidersToMonitor)
+            if (other == collisionEvent.targetCollider)
             {
-                if (other.GetComponent<Collider>() == collider)
-                {
-                    onCollisionStayEvent.Invoke();
-                }
+                collisionEvent.onStayEvent?.Invoke();
+                break;
             }
         }
     }
