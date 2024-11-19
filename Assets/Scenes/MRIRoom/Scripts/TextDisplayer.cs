@@ -47,6 +47,20 @@ public class TextDisplayer : MonoBehaviour
         }
     }
 
+    public void DisplaySpecificSegment(int index)
+    {
+        if (index < segments.Length - 1)
+        {
+            DisableGO();
+            currentIndex = index;
+            UpdateSegment();
+        }
+        else
+        {
+            Debug.Log("Reached the end of segments.");
+        }
+    }
+
     public void DisableGO()
     {
         titleText.gameObject.SetActive(false);
