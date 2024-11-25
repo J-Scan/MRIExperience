@@ -25,10 +25,16 @@ public class HandleReticleCollision : MonoBehaviour
 
     private bool isCorrectFeedbackActive = false;
     private bool isIncorrectFeedbackActive = false;
+    private bool hasAudioFeedback = true;
 
     public void Start()
     {
 
+    }
+
+    public void SetAudioFeedbackState(bool state)
+    {
+        this.hasAudioFeedback = state;
     }
 
     public void Init()
@@ -95,7 +101,7 @@ public class HandleReticleCollision : MonoBehaviour
         }
         fixationCross.SetColor("_Color", Color.green);
 
-        HandleCorrectAudio();
+        if (hasAudioFeedback) HandleCorrectAudio();
     }
 
     private void HandleIncorrectFeedback()
@@ -110,7 +116,7 @@ public class HandleReticleCollision : MonoBehaviour
         }
         fixationCross.SetColor("_Color", Color.red);
 
-        HandleIncorrectAudio();
+        if (hasAudioFeedback) HandleIncorrectAudio();
     }
 
     private void HandleCorrectAudio()

@@ -90,6 +90,17 @@ public class LocationTransition : MonoBehaviour
         locationIndex++;
     }
 
+    public void SetLocationIndex(int index)
+    {
+        locationIndex = index;
+    }
+
+    public void GoToSpecificLocation(int index)
+    {
+        locationIndex = index;
+        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length], fadeScreen.fadeDuration));
+    }
+
     public void GoToNextLocation()
     {
         locationIndex++;

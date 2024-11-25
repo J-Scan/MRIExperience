@@ -78,17 +78,17 @@ public class TextDisplayer : MonoBehaviour
         Segment currentSegment = segments[currentIndex];
         titleText.text = currentSegment.title;
         // Mise à jour du titre et des déclarations
-        if (currentSegment.title != null)
+        if (currentSegment.title != null && currentSegment.title != "")
         {
             titleText.gameObject.SetActive(true);
             titleText.text = currentSegment.title;
         }
-        if (currentSegment.shortStatement != null)
+        if (currentSegment.shortStatement != null && currentSegment.shortStatement != "")
         {
             shortStatementText.gameObject.SetActive(true);
             shortStatementText.text = currentSegment.shortStatement;
         }
-        if (currentSegment.longStatement != null)
+        if (currentSegment.longStatement != null && currentSegment.longStatement!="")
         {
             longStatementText.gameObject.SetActive(true);
             longStatementText.text = currentSegment.longStatement;
