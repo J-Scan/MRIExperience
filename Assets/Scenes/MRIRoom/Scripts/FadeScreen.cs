@@ -51,6 +51,11 @@ public class FadeScreen : MonoBehaviour
         StartCoroutine(FadeRoutine(alphaIn, alphaOut));
     }
 
+    public void Fade(float alphaOut)
+    {
+        StartCoroutine(FadeRoutine(rend.material.color.a, alphaOut));
+    }
+
     public IEnumerator FadeRoutine(float alphaIn, float alphaOut)
     {
         GetComponent<MeshRenderer>().enabled = true;

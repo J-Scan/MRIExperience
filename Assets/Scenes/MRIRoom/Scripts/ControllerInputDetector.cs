@@ -20,8 +20,14 @@ public class ControllerInputDetector : MonoBehaviour
     //[SerializeField] private InputActionReference leftJoystickAction;
     //[SerializeField] private InputActionReference leftJoystickActionSimulator;
 
+    private bool performManualRealignment = false; // Toggles manual realignment mode
+    [SerializeField] private Transform origin; // Transform to adjust
+    [SerializeField] private float movementSpeed = 0.1f; // Movement speed
+    [SerializeField] private float rotationSpeed = 45f;  // Rotation speed
+
     [SerializeField] UnityEvent OnPrimaryButtonPressed;
     [SerializeField] UnityEvent OnTriggerButtonHeld;
+    [SerializeField] UnityEvent<Vector2, Vector2> OnManualAlignmentWithJoysticks;
 
     void Start()
     {
@@ -56,6 +62,11 @@ public class ControllerInputDetector : MonoBehaviour
     }
     */
 
+    public void SetManualRealignement(bool value)
+    {
+        this.performManualRealignment = value;
+    }
+
     void InitializeDevices()
     {
         List<UnityEngine.XR.InputDevice> devices = new List<UnityEngine.XR.InputDevice>();
@@ -82,12 +93,22 @@ public class ControllerInputDetector : MonoBehaviour
             InitializeDevices();
         }
 
+        if (performManualRealignment)
+        {
+            HandleManualRealignmentInput();
+        }
+        
+        HandleDefaultInput();
+        
+    }
+
+    private void HandleDefaultInput()
+    {
         if (rightInitialized)
         {
             right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedR);
             if (isPressedR)
             {
-                //GetComponent<LocationTransition>().Recenter();
                 OnPrimaryButtonPressed.Invoke();
                 return;
             }
@@ -101,7 +122,6 @@ public class ControllerInputDetector : MonoBehaviour
             left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedL);
             if (isPressedL)
             {
-                //GetComponent<LocationTransition>().Recenter();
                 OnPrimaryButtonPressed.Invoke();
                 return;
             }
@@ -110,6 +130,36 @@ public class ControllerInputDetector : MonoBehaviour
             HandleHoldInput(isPressedLT, true);
         }
     }
+
+    private void HandleManualRealignmentInput()
+    {
+        Vector2 leftJoystickInput = Vector2.zero;
+        Vector2 rightJoystickInput = Vector2.zero;
+
+        // Obtenez les valeurs des joysticks
+        if (leftInitialized && left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 leftInput))
+        {
+            if (leftInput.magnitude > 0.1f)
+            {
+                leftJoystickInput = leftInput;
+            }
+        }
+
+        if (rightInitialized && right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 rightInput))
+        {
+            if (rightInput.magnitude > 0.1f)
+            {
+                rightJoystickInput = rightInput;
+            }
+        }
+
+        // Invoquez l'événement avec les données des joysticks
+        if (leftJoystickInput != Vector2.zero || rightJoystickInput != Vector2.zero)
+        {
+            OnManualAlignmentWithJoysticks.Invoke(leftJoystickInput, rightJoystickInput);
+        }
+    }
+
 
     private void HandleHoldInput(bool isPressed, bool isLeft)
     {
