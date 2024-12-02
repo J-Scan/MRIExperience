@@ -4,14 +4,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class MenuPauser : MonoBehaviour
 {
 
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject menuCamera;
+    [SerializeField] private Button backToMainButton;
+
     [SerializeField] UnityEvent OnEnterPause;
     [SerializeField] UnityEvent OnFinishPause;
+
     private bool inPause = false;
     // Start is called before the first frame update
     void Start()
@@ -44,6 +48,7 @@ public class MenuPauser : MonoBehaviour
         menuCamera.SetActive(false);
         OnFinishPause.Invoke();
         inPause = false;
+        backToMainButton.onClick.Invoke();
     }
 
     public void DesactivateMenuInFront()
@@ -81,4 +86,5 @@ public class MenuPauser : MonoBehaviour
         Time.timeScale = 1.0f;
         //And you should also cancel any input to the game.
     }
+
 }

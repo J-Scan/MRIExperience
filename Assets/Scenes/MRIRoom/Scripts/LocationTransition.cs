@@ -43,41 +43,68 @@ public class LocationTransition : MonoBehaviour
 
     public void Recenter(Transform dest)
     {
+        // Calculez l'offset horizontal (sans inclure la hauteur)
         Vector3 offset = head.position - origin.position;
         offset.y = 0;
+
+        // Positionnez l'origine horizontalement à la destination cible
         origin.position = dest.position - offset;
 
+        // Ajustez la hauteur dynamique pour compenser les changements (assise ou debout)
+        float currentUserHeight = head.position.y; // Hauteur actuelle de la tête
+        float targetHeight = dest.position.y; // Hauteur cible
+        float heightAdjustment = targetHeight - currentUserHeight;
+
+        // Appliquez l'ajustement de hauteur à l'origine
+        origin.position += new Vector3(0, heightAdjustment, 0);
+
+        // Calculez la rotation cible
         Vector3 targetForward = dest.forward;
         targetForward.y = 0;
+        targetForward.Normalize();
+
         Vector3 cameraForward = head.forward;
         cameraForward.y = 0;
+        cameraForward.Normalize();
 
         float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
 
+        // Appliquez la rotation autour de la position de la tête
         origin.RotateAround(head.position, Vector3.up, angle);
     }
 
     public void Recenter()
     {
-        //Debug.Log("----Recenter----");
-        //Debug.Log("Head position: " + head.position);
-        //Debug.Log("XRRig Origin position: " + origin.position);
+        // Calculez l'offset horizontal (sans inclure la hauteur)
         Vector3 offset = head.position - origin.position;
-        //Debug.Log("Offset: " + offset);
         offset.y = 0;
-        //Debug.Log("New Offset: " + offset);
-        origin.position = locations[locationIndex % locations.Length].position - offset;
-        //Debug.Log("New XRRig Origin position: " + origin.position);
 
+        // Positionnez l'origine horizontalement à la destination cible
+        origin.position = locations[locationIndex % locations.Length].position - offset;
+
+        // Ajustez la hauteur dynamique pour compenser les changements (assise ou debout)
+        float currentUserHeight = head.position.y; // Hauteur actuelle de la tête
+        float targetHeight = locations[locationIndex % locations.Length].position.y; // Hauteur cible
+        float heightAdjustment = targetHeight - currentUserHeight;
+
+        // Appliquez l'ajustement de hauteur à l'origine
+        origin.position += new Vector3(0, heightAdjustment, 0);
+
+        // Calculez la rotation cible
         Vector3 targetForward = locations[locationIndex % locations.Length].forward;
         targetForward.y = 0;
+        targetForward.Normalize();
+
         Vector3 cameraForward = head.forward;
         cameraForward.y = 0;
+        cameraForward.Normalize();
 
         float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
 
+        // Appliquez la rotation autour de la position de la tête
         origin.RotateAround(head.position, Vector3.up, angle);
     }
+
 
     public IEnumerator GoToFirstLocation(float waitTime)
     {
