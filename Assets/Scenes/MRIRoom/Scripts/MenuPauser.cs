@@ -17,10 +17,16 @@ public class MenuPauser : MonoBehaviour
     [SerializeField] UnityEvent OnFinishPause;
 
     private bool inPause = false;
-    // Start is called before the first frame update
+    private CanvasGroup canvasGroup;
+
     void Start()
     {
-        
+        canvasGroup = menuCanvas.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+        {
+            Debug.LogWarning("CanvasGroup is missing on the menuCanvas GameObject.");
+        }
     }
 
     // Update is called once per frame
@@ -78,13 +84,28 @@ public class MenuPauser : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0.0f;
-        //And you should also cancel any input to the game.
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (var audioSource in audioSources)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Pause();
+            }
+        }
     }
 
     public void UnpauseGame()
     {
         Time.timeScale = 1.0f;
-        //And you should also cancel any input to the game.
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (var audioSource in audioSources)
+        {
+            audioSource.UnPause();
+        }
     }
 
 }

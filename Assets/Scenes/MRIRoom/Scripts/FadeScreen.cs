@@ -51,9 +51,9 @@ public class FadeScreen : MonoBehaviour
         StartCoroutine(FadeRoutine(alphaIn, alphaOut));
     }
 
-    public void Fade(float alphaOut)
+    public void FadeKeepMaterial(float alphaOut)
     {
-        StartCoroutine(FadeRoutine(rend.material.color.a, alphaOut));
+        StartCoroutine(FadeRoutineKeepMaterial(rend.material.color.a, alphaOut));
     }
 
     public IEnumerator FadeRoutine(float alphaIn, float alphaOut)
@@ -67,7 +67,7 @@ public class FadeScreen : MonoBehaviour
 
             rend.material.SetColor("_Color", newColor);
 
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             yield return null;
         }
 
@@ -75,5 +75,25 @@ public class FadeScreen : MonoBehaviour
         newColor2.a = alphaOut;
         rend.material.SetColor("_Color", newColor2);
         GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    public IEnumerator FadeRoutineKeepMaterial(float alphaIn, float alphaOut)
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        float timer = 0;
+        while (timer <= fadeDuration)
+        {
+            Color newColor = fadeColor;
+            newColor.a = Mathf.Lerp(alphaIn, alphaOut, timer / fadeDuration);
+
+            rend.material.SetColor("_Color", newColor);
+
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        Color newColor2 = fadeColor;
+        newColor2.a = alphaOut;
+        rend.material.SetColor("_Color", newColor2);
     }
 }

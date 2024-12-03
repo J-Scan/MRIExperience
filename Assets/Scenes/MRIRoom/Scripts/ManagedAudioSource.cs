@@ -34,7 +34,7 @@ class ManagedAudioSource : MonoBehaviour
 
     public void StopAudio()
     {
-        if (src != null && src.isPlaying)
+        if (src != null && src.isPlaying && Time.timeScale != 0f)
         {
             src.Stop();
             playing = false;  // Update the playing flag when stopped
@@ -47,7 +47,7 @@ class ManagedAudioSource : MonoBehaviour
         if (!playing) return;
 
         // Check if the AudioSource is still playing
-        if (!src.isPlaying)
+        if (!src.isPlaying && Time.timeScale != 0f)
         {
             playing = false;
             OnFinishPlayback.Invoke();
