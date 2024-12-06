@@ -20,6 +20,9 @@ public class ControllerInputDetector : MonoBehaviour
 
     private bool holdingEnabled = true;
 
+    private bool wasPrimaryButtonPressedR = false;
+    private bool wasPrimaryButtonPressedL = false;
+
     [SerializeField] UnityEvent OnPrimaryButtonPressed;
     [SerializeField] UnityEvent OnTriggerButtonHeld;
 
@@ -92,30 +95,35 @@ public class ControllerInputDetector : MonoBehaviour
         HandleDefaultInput();
         
     }
-
     private void HandleDefaultInput()
     {
+        // Vérifiez les entrées du contrôleur droit
         if (rightInitialized)
         {
             right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedR);
-            if (isPressedR)
+
+            // Détecte une transition de "relâché" à "pressé" pour le bouton droit
+            if (isPressedR && !wasPrimaryButtonPressedR)
             {
-                OnPrimaryButtonPressed.Invoke();
-                return;
+                OnPrimaryButtonPressed.Invoke(); // Appelle l'événement une seule fois
             }
+            wasPrimaryButtonPressedR = isPressedR; // Met à jour l'état précédent
 
             right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRT);
             HandleHoldInput(isPressedRT, false);
         }
 
+        // Vérifiez les entrées du contrôleur gauche
         if (leftInitialized)
         {
             left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedL);
-            if (isPressedL)
+
+            // Détecte une transition de "relâché" à "pressé" pour le bouton gauche
+            if (isPressedL && !wasPrimaryButtonPressedL)
             {
-                OnPrimaryButtonPressed.Invoke();
-                return;
+                OnPrimaryButtonPressed.Invoke(); // Appelle l'événement une seule fois
             }
+            wasPrimaryButtonPressedL = isPressedL; // Met à jour l'état précédent
 
             left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedLT);
             HandleHoldInput(isPressedLT, true);

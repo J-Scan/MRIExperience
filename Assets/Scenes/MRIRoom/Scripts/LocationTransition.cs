@@ -81,19 +81,21 @@ public class LocationTransition : MonoBehaviour
         Vector3 offset = head.position - origin.position;
         offset.y = 0;
 
+        Transform target = locations[locationIndex % locations.Length];
+
         // Positionnez l'origine horizontalement à la destination cible
-        origin.position = locations[locationIndex % locations.Length].position - offset;
+        origin.position = target.position - offset;
 
         // Ajustez la hauteur dynamique pour compenser les changements (assise ou debout)
         float currentUserHeight = head.position.y; // Hauteur actuelle de la tête
-        float targetHeight = locations[locationIndex % locations.Length].position.y; // Hauteur cible
+        float targetHeight = target.position.y; // Hauteur cible
         float heightAdjustment = targetHeight - currentUserHeight;
 
         // Appliquez l'ajustement de hauteur à l'origine
         origin.position += new Vector3(0, heightAdjustment, 0);
 
         // Calculez la rotation cible
-        Vector3 targetForward = locations[locationIndex % locations.Length].forward;
+        Vector3 targetForward = target.forward;
         targetForward.y = 0;
         targetForward.Normalize();
 
@@ -101,10 +103,19 @@ public class LocationTransition : MonoBehaviour
         cameraForward.y = 0;
         cameraForward.Normalize();
 
+        /*
+        if (Vector3.Dot(head.up, Vector3.up) < 0)
+        {
+            cameraForward = -cameraForward;
+            Debug.Log("Head is tilted backward beyond 90 degrees, flipping forward vector");
+        }
+        */
+
         float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
 
         // Appliquez la rotation autour de la position de la tête
         origin.RotateAround(head.position, Vector3.up, angle);
+      
     }
 
 
