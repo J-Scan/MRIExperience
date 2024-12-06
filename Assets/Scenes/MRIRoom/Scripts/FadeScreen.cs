@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class FadeScreen : MonoBehaviour
 {
-    public float fadeDuration = 2f;
+    private float fadeDuration = 2f;
     public Color fadeColor;
     public Renderer rend;
     public bool fadeOnStart = true;
 
-    void Start()
+
+    public void Start()
     {
         rend = GetComponent<Renderer>();
         if (fadeOnStart)
         {
             FadeIn();
         }
+    }
+
+    public float GetFadeDuration()
+    {
+        return fadeDuration;
     }
 
     public void SetFadeRation(float duration)
@@ -48,52 +54,53 @@ public class FadeScreen : MonoBehaviour
 
     public void Fade(float alphaIn, float alphaOut)
     {
+        rend.enabled = true;
         StartCoroutine(FadeRoutine(alphaIn, alphaOut));
     }
 
-    public void FadeKeepMaterial(float alphaOut)
+
+    public void PerformFade(float targetAlpha)
     {
-        StartCoroutine(FadeRoutineKeepMaterial(rend.material.color.a, alphaOut));
+        rend.enabled = true;
+
+        if (!rend.material.HasProperty("_Color"))
+        {
+            Debug.LogError("Material does not have the '_Color' property.");
+            return;
+        }
+
+        float currentAlpha = rend.material.color.a;
+
+        if (Mathf.Approximately(currentAlpha, targetAlpha))
+        {
+            return;
+        }
+        StartCoroutine(FadeRoutine(currentAlpha, targetAlpha));
     }
 
-    public IEnumerator FadeRoutine(float alphaIn, float alphaOut)
+    private IEnumerator FadeRoutine(float startAlpha, float targetAlpha)
     {
-        GetComponent<MeshRenderer>().enabled = true;
-        float timer = 0;
-        while (timer <= fadeDuration)
-        {
-            Color newColor = fadeColor;
-            newColor.a = Mathf.Lerp(alphaIn, alphaOut, timer / fadeDuration);
+        float timer = 0f;
 
-            rend.material.SetColor("_Color", newColor);
+        Color initialColor = rend.material.color;
+
+        while (timer < fadeDuration)
+        {
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, timer / fadeDuration);
+
+            rend.material.color = new Color(initialColor.r, initialColor.g, initialColor.b, newAlpha);
 
             timer += Time.unscaledDeltaTime;
+
             yield return null;
         }
 
-        Color newColor2 = fadeColor;
-        newColor2.a = alphaOut;
-        rend.material.SetColor("_Color", newColor2);
-        GetComponent<MeshRenderer>().enabled = false;
-    }
+        rend.material.color = new Color(initialColor.r, initialColor.g, initialColor.b, targetAlpha);
 
-    public IEnumerator FadeRoutineKeepMaterial(float alphaIn, float alphaOut)
-    {
-        GetComponent<MeshRenderer>().enabled = true;
-        float timer = 0;
-        while (timer <= fadeDuration)
+        if (targetAlpha == 0f)
         {
-            Color newColor = fadeColor;
-            newColor.a = Mathf.Lerp(alphaIn, alphaOut, timer / fadeDuration);
-
-            rend.material.SetColor("_Color", newColor);
-
-            timer += Time.unscaledDeltaTime;
-            yield return null;
+            rend.enabled = false;
         }
 
-        Color newColor2 = fadeColor;
-        newColor2.a = alphaOut;
-        rend.material.SetColor("_Color", newColor2);
     }
 }

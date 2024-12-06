@@ -11,6 +11,8 @@ public class LocationTransition : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
 
+    [SerializeField] private float locationTransitionDuration = 2f;
+
     public void Awake()
     {
         fadeScreen.FadeIn();
@@ -125,14 +127,14 @@ public class LocationTransition : MonoBehaviour
     public void GoToSpecificLocation(int index)
     {
         locationIndex = index;
-        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length], fadeScreen.fadeDuration));
+        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length]));
     }
 
     public void GoToNextLocation()
     {
         locationIndex++;
         //Debug.Log("GoToNextLocation called");
-        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length], fadeScreen.fadeDuration));
+        StartCoroutine(GoToLocation(locations[locationIndex % locations.Length]));
     }
 
     public void ResetCurrentLocation()
@@ -145,11 +147,12 @@ public class LocationTransition : MonoBehaviour
         StartCoroutine(PerformEndLocation());
     }
 
-    public IEnumerator GoToLocation(Transform newLocation, float fadeTime)
+    public IEnumerator GoToLocation(Transform newLocation)
     {
         //Debug.Log("GoToLocation called");
+        fadeScreen.SetFadeRation(locationTransitionDuration);
         fadeScreen.FadeOut();
-        yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(locationTransitionDuration);
 
         Recenter();
         //Debug.Log("switched");
@@ -158,8 +161,9 @@ public class LocationTransition : MonoBehaviour
 
     public IEnumerator PerformEndLocation()
     {
+        fadeScreen.SetFadeRation(locationTransitionDuration);
         fadeScreen.FadeOut();
-        yield return new WaitForSeconds(fadeScreen.fadeDuration-0.5f);
+        yield return new WaitForSeconds(fadeScreen.GetFadeDuration()-0.5f);
         #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
         #else

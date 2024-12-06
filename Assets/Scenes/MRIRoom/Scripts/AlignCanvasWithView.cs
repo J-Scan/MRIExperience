@@ -32,10 +32,10 @@ public class AlignCanvasWithView : MonoBehaviour
         targetPosition = vrCamera.position + vrCamera.forward * distanceFromCamera + offset;
 
         // Interpolation linéaire pour déplacer le Canvas
-        canvasTransform.position = Vector3.Lerp(canvasTransform.position, targetPosition, Time.deltaTime * smoothSpeed);
+        canvasTransform.position = Vector3.Lerp(canvasTransform.position, targetPosition, Time.unscaledDeltaTime * smoothSpeed);
 
         // Faire face à la caméra avec interpolation
         Quaternion targetRotation = Quaternion.LookRotation(canvasTransform.position - vrCamera.position);
-        canvasTransform.rotation = Quaternion.Slerp(canvasTransform.rotation, targetRotation, Time.deltaTime * smoothSpeed);
+        canvasTransform.rotation = Quaternion.Slerp(canvasTransform.rotation, targetRotation, Time.unscaledDeltaTime * smoothSpeed);
     }
 }

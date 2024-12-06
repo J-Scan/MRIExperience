@@ -11,6 +11,7 @@ public class MenuPauser : MonoBehaviour
 
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject menuCamera;
+    [SerializeField] private CanvasActivator canvasActivator;
     [SerializeField] private Button backToMainButton;
 
     [SerializeField] UnityEvent OnEnterPause;
