@@ -72,12 +72,11 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-
-
-
+/[Aa]ssets/PolygonParticleFX/
 /[Aa]ssets/HospitalPack/
+/[Aa]ssets/AllSkyFree/
 /[Aa]ssets/OfficeAndPoliceStation/
 /[Pp]ackages/com.crispgroup.vrassetspackage/
 /[Pp]ackages/com.crispgroup.vrassetspackage2/
+/[Aa]ssets/Keystore/
 /ParticipantsData/
