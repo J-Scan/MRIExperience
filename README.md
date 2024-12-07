@@ -1,12 +1,8 @@
 # MissionControl (MRIVR)
-  <center>
-
-  <img width="150px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
-   <img width="150px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MRIRoom.png">
-    <img width="150px" height="50%" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/InsideScanner.png">
-     <img width="150px" height="50%" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MoonTravel.png">
-  
-  </center>
+<div align="center">
+    <img width="200px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
+    <img width="400px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MRIVR.png">
+</div>
 
 ## Trailer Video
 https://youtu.be/6e5fm8P5fFA
