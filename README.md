@@ -1,7 +1,7 @@
 # MissionControl (MRIVR)
 <div align="center">
-    <img width="200px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
-    <img width="400px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MRIVR.png">
+    <img height="280px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
+    <img height="280px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MRIVR.png">
 </div>
 
 ## Trailer Video
