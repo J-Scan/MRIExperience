@@ -1,7 +1,7 @@
 # MissionControl (MRIVR)
   <center>
 
-  <img width="150%" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
+  <img width="150px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
    <img width="150px" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MRIRoom.png">
     <img width="150px" height="50%" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/InsideScanner.png">
      <img width="150px" height="50%" src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/MoonTravel.png">
