@@ -1,5 +1,5 @@
 # MissionControl (MRIVR)
-![MRIVR Logo](https://github.com/J-Scan/MRIExperience/blob/master/Submission/mission-control-logo.png)
+  <img src="https://github.com/J-Scan/MRIExperience/blob/main/Submission/mission-control-logo.png">
 
 1. Trailer Video: https://youtu.be/6e5fm8P5fFA
 
