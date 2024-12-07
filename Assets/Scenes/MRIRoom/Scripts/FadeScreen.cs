@@ -5,7 +5,6 @@ using UnityEngine;
 public class FadeScreen : MonoBehaviour
 {
     private float fadeDuration = 2f;
-    public Color fadeColor;
     public Renderer rend;
     public bool fadeOnStart = true;
 
