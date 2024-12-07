@@ -1,4 +1,4 @@
-1. Trailer link: https://youtu.be/6e5fm8P5fFA
+1. [![Watch the Trailer video]](https://youtu.be/6e5fm8P5fFA)
 
 2. Project description: Children undergoing MRI scans can often feel anxious and restless, leading to movement artifacts and the potential need for sedation during the procedure. To enhance patient experience and reduce the need for sedation, we created Mission Control, an immersive VR simulation that simulates a rocket landing to prepare children for the MRI process. After familiarizing themselves with the MRI room and scanner, children board their spaceship and observe the launch and landing through a window. To successfully land, they must focus on the target, keep their head still, and follow visual and audio cues to minimize head movement and safely reach the moon.
 
@@ -7,7 +7,6 @@
 4. Assets/dependencies: Although the source code is available here, most of the 3D models are missing to respect the licenses and usage rights given when we purchased them.
 Below are some examples of assets that are necessary to exactly reproduce our MRIVR and that have been removed to comply with these rules.
 - Package Manager > + > Add package from URL > https://github.com/CRISPGroup/com.crispgroup.vrassetspackage.git and also https://github.com/CRISPGroup/com.crispgroup.vrassetspackage2.git (or go to Packages folder and clone the repo)
-- And a couple of 3d models found on sketchfab
 
 5. References/resources:
 
