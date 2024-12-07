@@ -1,11 +1,10 @@
-1. Trailer link:
-  
-2. Project description: Children undergoing MRI scans can often feel anxious and restless, leading to movement artifacts and the potential need for sedation during the procedure. To enhance patient experience and reduce the need for sedation, we created Mission Control, an immersive VR simulation that simulates a rocket landing to prepare children for the MRI process.
-After familiarizing themselves with the MRI room and scanner, children board their spaceship and observe the launch and landing through a window. To successfully land, they must focus on the target, keep their head still, and follow visual and audio cues to minimize head movement and safely reach the moon.
+1. Trailer link: https://youtu.be/QNgwFtwmzeg
+
+2. Project description: Children undergoing MRI scans can often feel anxious and restless, leading to movement artifacts and the potential need for sedation during the procedure. To enhance patient experience and reduce the need for sedation, we created Mission Control, an immersive VR simulation that simulates a rocket landing to prepare children for the MRI process. After familiarizing themselves with the MRI room and scanner, children board their spaceship and observe the launch and landing through a window. To successfully land, they must focus on the target, keep their head still, and follow visual and audio cues to minimize head movement and safely reach the moon.
 
 3. Technologies/features used: We created a Virtual Reality environment with the Unity Game Engine designed for the Oculus Quest 2 and Quest 3.
 
-5. References/resources:
+4. References/resources:
 
 Brown RKJ, Petty S, O'Malley S, Stojanovska J, Davenport MS, Kazerooni EA, Fessahazion D. Virtual Reality Tool Simulates MRI Experience. Tomography. 2018 Sep;4(3):95-98. doi: 10.18383/j.tom.2018.00023. PMID: 30320208; PMCID: PMC6173786.
 
@@ -13,5 +12,6 @@ Le May S, Genest C, Hung N, Francoeur M, Guingo E, Paquette J, Fortin O, Guay S.
 
 Nakarada-Kordic I, Reay S, Bennett G, Kruse J, Lydon AM, Sim J. Can virtual reality simulation prepare patients for an MRI experience? Radiography (Lond). 2020 Aug;26(3):205-213. doi: 10.1016/j.radi.2019.11.004. Epub 2019 Nov 28. PMID: 32052767.
 
-
-   
+# Dependencies
+## Assets
+- Package Manager > + > Add package from URL > https://github.com/CRISPGroup/com.crispgroup.vrassetspackage.git (or go to Packages folder and clone the repo)
