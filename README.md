@@ -17,6 +17,13 @@ We created a Virtual Reality environment with the Unity Game Engine designed for
 While the source code is available here, most of the 3D models have been omitted to comply with the licenses and usage rights granted at the time of purchase. Below are examples of assets essential for reproducing our MRIVR, which have been excluded to adhere to these regulations.
 - Package Manager > + > Add package from URL > https://github.com/CRISPGroup/com.crispgroup.vrassetspackage.git and also https://github.com/CRISPGroup/com.crispgroup.vrassetspackage2.git (or go to Packages folder and clone the repo)
 
+### Credits for free assets
+Office chair: https://sketchfab.com/3d-models/office-chair-654794ae5bb44303a3fa5223f552f4e4
+Recycle bin: https://sketchfab.com/3d-models/recycle-bin-1128266865624dcf96a34bde46185d42
+
+## Licence
+We do not authorize the use, modification or sharing of anything related to this project (software, source code, etc.) without our authorization.
+
 ## References/resources:
 
 Brown RKJ, Petty S, O'Malley S, Stojanovska J, Davenport MS, Kazerooni EA, Fessahazion D. Virtual Reality Tool Simulates MRI Experience. Tomography. 2018 Sep;4(3):95-98. doi: 10.18383/j.tom.2018.00023. PMID: 30320208; PMCID: PMC6173786.
