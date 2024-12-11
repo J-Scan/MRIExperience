@@ -10,6 +10,7 @@ public class LocationTransition : MonoBehaviour
 
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
+    [SerializeField] private Transform environment;
 
     [SerializeField] private float locationTransitionDuration = 2f;
 
@@ -52,20 +53,24 @@ public class LocationTransition : MonoBehaviour
      * it to keep it level with the ground (project it onto the horizontal plane). 
      * This helps the system determine which way the player is facing and ensures proper alignment before recentering..
      * 
+     * Update:
+     * Changed everything, now the world rotates to be in front of the camera
+     * 
      */
     public void Recenter(Transform dest)
     {
+        // Calculer le décalage entre le joueur et l'origine
         Vector3 offset = head.position - origin.position;
         offset.y = 0;
 
-        Transform target = dest;
+        // Appliquer le décalage pour que le joueur soit aligné avec le point cible
+        Vector3 newOriginPosition = dest.position - offset;
+        newOriginPosition.y = origin.position.y; // Garder la hauteur initiale de l'origine
+        float heightAdjustment = dest.position.y - head.position.y;
+        newOriginPosition.y += heightAdjustment;
 
-        origin.position = target.position - offset;
-
-        float heightAdjustment = target.position.y - head.position.y;
-        origin.position += new Vector3(0, heightAdjustment, 0);
-
-        Vector3 targetForward = target.forward;
+        // Ajuster la rotation pour aligner le joueur avec le target
+        Vector3 targetForward = dest.forward;
         targetForward.y = 0;
         targetForward.Normalize();
 
@@ -73,23 +78,27 @@ public class LocationTransition : MonoBehaviour
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        // Correction for important tilts
-        float tiltAngle = Vector3.Angle(Vector3.up, head.up);
-
-        if (tiltAngle > 80f)
-        {
-            Vector3 directionToOrigin = (origin.position - head.position).normalized;
-            directionToOrigin.y = 0;
-
-            cameraForward = Vector3.ProjectOnPlane(directionToOrigin, Vector3.up).normalized;
-
-        }
-
-        cameraForward = Vector3.ProjectOnPlane(cameraForward, Vector3.up).normalized;
-
+        // Calculer l'angle de rotation nécessaire
         float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
 
-        origin.RotateAround(head.position, Vector3.up, angle);
+        // Réaligner l'environnement complet
+        Transform environment = origin; // Assumer que "origin" est le parent de tout l'environnement
+        environment.position = newOriginPosition;
+        environment.RotateAround(head.position, Vector3.up, angle);
+
+        // Gestion spécifique pour les inclinaisons > 80 degrés
+        float tiltAngle = Vector3.Angle(Vector3.up, head.up);
+        if (tiltAngle > 80f)
+        {
+            // Réinitialiser complètement la position et l'orientation de l'environnement
+            environment.position = -head.position;
+            environment.Rotate(Vector3.up, -angle);
+
+            // Alignement final avec le target
+            Vector3 directionToTarget = dest.position - head.position;
+            //directionToTarget.y = 0;
+            environment.position += directionToTarget;
+        }
     }
 
     public void Recenter()
