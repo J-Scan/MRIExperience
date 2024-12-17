@@ -16,24 +16,26 @@ public class HandleCollisionDetectionWithEvents : MonoBehaviour
 {
     [SerializeField] private List<CollisionEvent> collisionEvents = new List<CollisionEvent>();
 
+    private bool enableCollision = false;
+
     void Start()
     {
-        this.enabled = false;
+        this.enableCollision = false;
     }
 
     public void EnableCollisionDetection()
     {
-        this.enabled = true;
+        this.enableCollision = true;
     }
 
     public void DisableCollisionDetection()
     {
-        this.enabled = false;
+        this.enableCollision = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!enabled) return;
+        if (!enableCollision) return;
 
         foreach (CollisionEvent collisionEvent in collisionEvents)
         {
@@ -47,7 +49,7 @@ public class HandleCollisionDetectionWithEvents : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!enabled) return;
+        if (!enableCollision) return;
 
         foreach (CollisionEvent collisionEvent in collisionEvents)
         {
@@ -61,7 +63,7 @@ public class HandleCollisionDetectionWithEvents : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!enabled) return;
+        if (!enableCollision) return;
 
         foreach (CollisionEvent collisionEvent in collisionEvents)
         {
