@@ -11,6 +11,9 @@ public class ReticleController : MonoBehaviour
     [SerializeField]
     private Camera CameraFacing;
 
+    //[SerializeField]
+    //private Transform target;
+
     private Vector3 originalScale;
     private Vector3 currentScale;
     private Vector3 lastKnownPosition;
@@ -23,6 +26,13 @@ public class ReticleController : MonoBehaviour
         lastKnownPosition = transform.position;
         lastKnownDistance = CameraFacing.farClipPlane * 0.55f;
     }
+
+    /*
+    public void AdjustReticleToTarget()
+    {
+
+    }
+    */
 
     private void Update()
     {
