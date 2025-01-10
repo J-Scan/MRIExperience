@@ -11,8 +11,8 @@ public class ReticleController : MonoBehaviour
     [SerializeField]
     private Camera CameraFacing;
 
-    //[SerializeField]
-    //private Transform target;
+    [SerializeField]
+    private Transform target;
 
     private Vector3 originalScale;
     private Vector3 currentScale;
@@ -27,16 +27,18 @@ public class ReticleController : MonoBehaviour
         lastKnownDistance = CameraFacing.farClipPlane * 0.55f;
     }
 
-    /*
     public void AdjustReticleToTarget()
     {
-
+        // Position the reticle on the target the first time the offset is calculated
+        if (target != null && target.gameObject.activeSelf)
+        {
+            Vector3 directionToTarget = (target.position - rayInteractor.transform.position).normalized;
+            rayInteractor.transform.rotation = Quaternion.LookRotation(directionToTarget);
+        }
     }
-    */
 
     private void Update()
     {
-        float distance;
         if (rayInteractor == null || crosshair == null)
         {
             Debug.LogError("RayInteractor or Crosshair is not assigned.");
@@ -75,9 +77,9 @@ public class ReticleController : MonoBehaviour
 
         // Smoothly transition to the new reticle position
         transform.position = Vector3.Lerp(transform.position, lastKnownPosition, smoothFactor);
-
-        // Ensure the reticle is oriented towards the camera for consistent visibility
+        
         transform.LookAt(CameraFacing.transform.position);
-        transform.Rotate(0f, 180f, 0f);
+
+        transform.Rotate(0f, 180f, 0f); // Ensures the reticle faces correctly
     }
 }

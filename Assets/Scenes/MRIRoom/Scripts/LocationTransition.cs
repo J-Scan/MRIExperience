@@ -11,6 +11,8 @@ public class LocationTransition : MonoBehaviour
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
     [SerializeField] private Transform environment;
+    [SerializeField] private Transform moonTarget
+;
 
     [SerializeField] private float locationTransitionDuration = 2f;
 
@@ -42,6 +44,46 @@ public class LocationTransition : MonoBehaviour
         origin.position = newPosition;
         newTransform.position = newPosition;
         //Recenter(newTransform);
+    }
+
+    /* Old recenter
+     *    public void Recenter(Transform dest)
+    {
+        Vector3 offset = head.position - origin.position;
+        offset.y = 0;
+
+        Transform target = dest;
+
+        origin.position = target.position - offset;
+
+        float heightAdjustment = target.position.y - head.position.y;
+        origin.position += new Vector3(0, heightAdjustment, 0);
+
+        Vector3 targetForward = target.forward;
+        targetForward.y = 0;
+        targetForward.Normalize();
+
+        Vector3 cameraForward = head.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
+
+        // Correction for important tilts
+        float tiltAngle = Vector3.Angle(Vector3.up, head.up);
+
+        if (tiltAngle > 80f)
+        {
+            Vector3 directionToOrigin = (origin.position - head.position).normalized;
+            directionToOrigin.y = 0;
+
+            cameraForward = Vector3.ProjectOnPlane(directionToOrigin, Vector3.up).normalized;
+
+        }
+
+        cameraForward = Vector3.ProjectOnPlane(cameraForward, Vector3.up).normalized;
+
+        float angle = Vector3.SignedAngle(cameraForward, targetForward, Vector3.up);
+
+        origin.RotateAround(head.position, Vector3.up, angle);
     }
 
     /*
@@ -99,6 +141,7 @@ public class LocationTransition : MonoBehaviour
             //directionToTarget.y = 0;
             environment.position += directionToTarget;
         }
+
     }
 
     public void Recenter()
