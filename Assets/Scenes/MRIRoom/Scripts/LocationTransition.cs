@@ -10,10 +10,6 @@ public class LocationTransition : MonoBehaviour
 
     [SerializeField] private Transform head;
     [SerializeField] private Transform origin;
-    [SerializeField] private Transform environment;
-    [SerializeField] private Transform moonTarget
-;
-
     [SerializeField] private float locationTransitionDuration = 2f;
 
     public void Awake()

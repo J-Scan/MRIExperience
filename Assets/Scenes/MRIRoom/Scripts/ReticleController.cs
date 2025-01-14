@@ -35,6 +35,11 @@ public class ReticleController : MonoBehaviour
             Vector3 directionToTarget = (target.position - rayInteractor.transform.position).normalized;
             rayInteractor.transform.rotation = Quaternion.LookRotation(directionToTarget);
         }
+        else
+        {
+            Vector3 forwardDirection = CameraFacing.transform.forward;
+            rayInteractor.transform.rotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
+        }
     }
 
     private void Update()
