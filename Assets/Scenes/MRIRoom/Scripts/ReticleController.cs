@@ -27,6 +27,12 @@ public class ReticleController : MonoBehaviour
         lastKnownDistance = CameraFacing.farClipPlane * 0.55f;
     }
 
+    public void ResetReticleToCenter()
+    {
+        Vector3 forwardDirection = CameraFacing.transform.forward;
+        rayInteractor.transform.rotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
+    }
+
     public void AdjustReticleToTarget()
     {
         // Position the reticle on the target the first time the offset is calculated
@@ -34,11 +40,6 @@ public class ReticleController : MonoBehaviour
         {
             Vector3 directionToTarget = (target.position - rayInteractor.transform.position).normalized;
             rayInteractor.transform.rotation = Quaternion.LookRotation(directionToTarget);
-        }
-        else
-        {
-            Vector3 forwardDirection = CameraFacing.transform.forward;
-            rayInteractor.transform.rotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
         }
     }
 

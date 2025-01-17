@@ -20047,6 +20047,102 @@ MonoBehaviour:
           m_CallState: 2
     Tag: b0a4
     GotoTag: 
+  - Type: 1
+    WaitTime: 0
+    Triggers:
+    - Trigger: audio_completed
+      Tag: play-music
+    TriggerAND: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1372474809}
+          m_TargetAssemblyTypeName: ManagedAudioSource, Assembly-CSharp
+          m_MethodName: PlayFromInspector
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 1b2888925d1399b4f86530b47bb1fa6f,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    Tag: 
+    GotoTag: 
+  - Type: 2
+    WaitTime: 0
+    Triggers:
+    - Trigger: audio_completed
+      Tag: play-music
+    TriggerAND: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1372474809}
+          m_TargetAssemblyTypeName: ManagedAudioSource, Assembly-CSharp
+          m_MethodName: PlayFromInspector
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 21b31ac2506129e43959d144e274b4c1,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    Tag: play-music
+    GotoTag: 
+  - Type: 1
+    WaitTime: 0
+    Triggers:
+    - Trigger: audio_completed
+      Tag: play-music-2
+    TriggerAND: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1372474809}
+          m_TargetAssemblyTypeName: ManagedAudioSource, Assembly-CSharp
+          m_MethodName: PlayFromInspector
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 46363f9b0cf13f643a50d2ed3ecd6296,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    Tag: 
+    GotoTag: 
+  - Type: 2
+    WaitTime: 0
+    Triggers:
+    - Trigger: audio_completed
+      Tag: play-music
+    TriggerAND: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1372474809}
+          m_TargetAssemblyTypeName: ManagedAudioSource, Assembly-CSharp
+          m_MethodName: PlayFromInspector
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 46363f9b0cf13f643a50d2ed3ecd6296,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    Tag: play-music-2
+    GotoTag: 
   SequenceComplete:
     m_PersistentCalls:
       m_Calls:
