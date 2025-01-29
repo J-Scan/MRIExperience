@@ -20026,30 +20026,6 @@ MonoBehaviour:
   - Type: 2
     WaitTime: 0
     Triggers:
-    - Trigger: audio_completed
-      Tag: play-music
-    TriggerAND: 0
-    Event:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1960809151}
-          m_TargetAssemblyTypeName: PlaySoundLoopSimple, Assembly-CSharp
-          m_MethodName: PlaySound
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: 21b31ac2506129e43959d144e274b4c1,
-              type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-    Tag: play-music
-    GotoTag: 
-  - Type: 2
-    WaitTime: 0
-    Triggers:
     - Trigger: panel_completed
       Tag: 
     TriggerAND: 0
@@ -20085,7 +20061,7 @@ MonoBehaviour:
           m_MethodName: PlayFromInspector
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: 1b2888925d1399b4f86530b47bb1fa6f,
+            m_ObjectArgument: {fileID: 8300000, guid: 46363f9b0cf13f643a50d2ed3ecd6296,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
             m_IntArgument: 0
@@ -20094,6 +20070,30 @@ MonoBehaviour:
             m_BoolArgument: 1
           m_CallState: 2
     Tag: 
+    GotoTag: 
+  - Type: 2
+    WaitTime: 0
+    Triggers:
+    - Trigger: audio_completed
+      Tag: play-music
+    TriggerAND: 0
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1960809151}
+          m_TargetAssemblyTypeName: PlaySoundLoopSimple, Assembly-CSharp
+          m_MethodName: PlaySound
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 21b31ac2506129e43959d144e274b4c1,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    Tag: play-music
     GotoTag: 
   - Type: 1
     WaitTime: 0
