@@ -1,3 +1,5 @@
+[Update 2025] See new version here: https://github.com/CRISPGroup/Mission-Control-MRI-VR 
+
 1. Trailer link:
   
 2. Project description: Children undergoing MRI scans can often feel anxious and restless, leading to movement artifacts and the potential need for sedation during the procedure. To enhance patient experience and reduce the need for sedation, we created Mission Control, an immersive VR simulation that simulates a rocket landing to prepare children for the MRI process.
